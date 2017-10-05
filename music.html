@@ -361,12 +361,12 @@
             console.log(res[3])
             console.log($('.sort ul').getElementsByTagName('img')[0].src)
             for (i = 0; i < 5; i++) {
-                $('.sort ul').getElementsByTagName('img')[i].src = '/beijing' + i + '.jpg'
+                $('.sort ul').getElementsByTagName('img')[i].src = '/musicAPI/beijing' + i + '.jpg'
                 $('.sort ul').getElementsByTagName('p')[i].innerText = res[i].name
             }
             $('.fa-random').onclick = function() {
                 for (i = 0; i < 5; i++) {
-                    $('.sort ul').getElementsByTagName('img')[i].src = '/beijing' + index() + '.jpg'
+                    $('.sort ul').getElementsByTagName('img')[i].src = '/musicAPI/beijing' + index() + '.jpg'
                     $('.sort ul').getElementsByTagName('p')[i].innerText = res[ind()].name
                 }
             }
