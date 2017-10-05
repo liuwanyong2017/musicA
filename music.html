@@ -489,11 +489,11 @@
 
 
         time
-       // window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
-       //     clearInterval(time)
+        window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
+           clearInterval(time)
 
-       // }
-        window.onmousemove = function() {
+        }
+        $('.unactive').onmousemove = function() {
 
             $('.unactive').style.display = 'none'
             $('.sort').style.display = 'block'
