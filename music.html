@@ -204,9 +204,7 @@
             height: 80px;
         }
         
-        .hide {
-            display: none;
-        }
+     
         
         .unactive {
             height: 100%;
@@ -323,7 +321,7 @@
     </div>
 
 
-    <div class="unactive hide">
+    <div class="unactive ">
         <div class="musicimg"></div>
         <div class="mes">
             <div class="mes-bg"></div>
@@ -397,7 +395,7 @@
                     var res = JSON.parse(xhr.responseText)
                     console.log(res.song[0])
                     play(res)
-
+                    $('.unactive').style.display ='none'
                 } else {
                     console.log(error404)
                 }
