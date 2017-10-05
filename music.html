@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Music</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+    <meta name="referrer" content="no-referrer">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.5;
+            color: azure;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        .bg {
+            background: linear-gradient(to right top, rgba(38, 50, 105, 0.78), rgba(255, 152, 0, 0.45)), url(/beijing.jpg) center center no-repeat;
+            background-size: cover;
+            filter: blur(2px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .panalplay {
+            padding: 50px 50px 30px 150px;
+            height: 75%;
+            position: relative;
+        }
+        
+        .panal-bg {
+            background: #0F0D09;
+            opacity: 0.3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .panal {
+            float: left;
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            width: 400px;
+            position: relative;
+        }
+        
+        .musicimg {
+            background: url(/beijing1.jpeg) center center no-repeat;
+            background-size: cover;
+            height: 400px;
+        }
+        
+        .fa-forward {
+            color: azure;
+            font-size: 30px;
+        }
+        
+        .bar {
+            position: absolute;
+            top: 500px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .bar span {
+            margin-right: 40px;
+        }
+        
+        .bar span:hover {
+            color: cornflowerblue;
+        }
+        
+        .bar .fa-heart:hover {
+            color: deeppink;
+        }
+        
+        .message {
+            margin-left: 500px;
+        }
+        
+        .music-mes .leavemes {
+            padding: 5px 25px;
+            background: blue;
+            border-radius: 4px;
+        }
+        
+        .music-mes h2 {
+            margin-top: 60px;
+            font-size: 30px;
+        }
+        
+        .othermes {
+            margin-top: 90px;
+            font-size: 27px;
+        }
+        
+        .othermes span {
+            margin-right: 40px;
+        }
+        
+        .playmes {
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .progress {
+            width: 80%;
+            height: 5px;
+            background: cornflowerblue;
+            position: absolute;
+        }
+        
+        .progressnow {
+            height: 5px;
+            background: black;
+            width: 50%;
+        }
+        
+        .timer {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .title {
+            margin-top: 30px;
+            font-size: 30px;
+        }
+        
+        .auther {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        
+        .fa-music {
+            color: red;
+            opacity: 0.5;
+            margin-top: 10px;
+        }
+        
+        .sort {
+            height: 25%;
+            padding: 10px 50px;
+            position: relative;
+        }
+        
+        .sort-bg {
+            background: antiquewhite;
+            opacity: 0.3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .fa-random {
+            font-size: 60px;
+            color: cornflowerblue;
+            position: absolute;
+            top: 50%;
+            left: 140px;
+            transform: translate(-50%, -50%);
+        }
+        
+        .fa-random:hover {
+            color: crimson;
+        }
+        
+        .sort li {
+            display: inline-block;
+            width: 16%;
+            margin-right: 10px;
+        }
+        
+        .sort ul {
+            margin-left: 120px;
+            text-align: center;
+            position: absolute;
+        }
+        
+        .sort img {
+            width: 100%;
+            height: 180px;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .unactive {
+            height: 100%;
+            position: relative;
+        }
+        
+        .unactive .musicimg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 500px;
+            width: 500px;
+        }
+        
+        .unactive .mes {
+            position: absolute;
+            top: 80%;
+            width: 100%;
+            text-align: center;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+        
+        .mes-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: sienna;
+            opacity: 0.3;
+        }
+        
+        .unactive .progress {
+            width: 100%;
+        }
+        
+        .unactive .timer {
+            position: absolute;
+            right: 10%;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg"></div>
+    <div class="panalplay ">
+        <div class="panal-bg"></div>
+        <div class="panal">
+            <div class="musicimg"></div>
+            <div class="bar">
+                <span class="fa-heart fa"></span>
+                <span class="fa-pause play fa"></span>
+                <span class="fa-forward fa"></span>
+            </div>
+        </div>
+        <div class="message">
+            <div class="music-mes">
+                <span class="leavemes">流着万条永远的河</span>
+                <h2>Just for fun!</h2>
+                <div class="othermes">
+                    <span class="fa-headphones fa">&nbsp;&nbsp;43545</span>
+                    <span class="fa-heart fa">&nbsp;&nbsp;4655</span>
+                    <span class="fa-podcast fa">&nbsp;&nbsp;LavaRadio</span>
+                </div>
+            </div>
+            <div class="playmes ">
+
+                <div class="progress">
+                    <div class="progressnow"></div>
+                </div>
+                <div class="timer">
+                    <span class="minute">0</span><span>:</span><span class="second">00</span>
+                </div>
+
+            </div>
+            <span class="fa-music fa  fa-3x fa-fw"></span>
+            <div class="title">My song</div>
+            <div class="auther">auther</div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="sort ">
+        <div class="sort-bg"></div>
+        <span class="fa-random fa"></span>
+        <ul>
+            <li>
+                <img src="/beijing.jpg" alt="">
+                <p>haha</p>
+            </li>
+            <li>
+                <img src="" alt="">
+                <p></p>
+            </li>
+            <li>
+                <img src="" alt="">
+                <p></p>
+            </li>
+            <li>
+                <img src="" alt="">
+                <p></p>
+            </li>
+            <li>
+                <img src="" alt="">
+                <p></p>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="unactive hide">
+        <div class="musicimg"></div>
+        <div class="mes">
+            <div class="mes-bg"></div>
+            <div class="progress">
+                <div class="progressnow"></div>
+            </div>
+            <div class="title">My song</div>
+            <div class="timer">
+                <span class="minute">0</span><span>:</span><span class="second">00</span>
+            </div>
+            <div class="auther">auther</div>
+
+        </div>
+    </div>
+    <script>
+        function getSort(callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', 'https://jirenguapi.applinzi.com/fm/getChannels.php', true)
+            xhr.onload = function() {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    var res = JSON.parse(xhr.responseText).channels
+                    console.log(res)
+                    callback(res)
+                } else {
+                    console.log(error404)
+                }
+                xhr.onerror = function() {
+                    console.log('异常')
+                }
+            }
+            xhr.send()
+        }
+
+        function $(selection) {
+            return document.querySelector(selection)
+        }
+
+
+        getSort(function(res) {
+            console.log(res[3])
+            console.log($('.sort ul').getElementsByTagName('img')[0].src)
+            for (i = 0; i < 5; i++) {
+                $('.sort ul').getElementsByTagName('img')[i].src = '/beijing' + i + '.jpg'
+                $('.sort ul').getElementsByTagName('p')[i].innerText = res[i].name
+            }
+            $('.fa-random').onclick = function() {
+                for (i = 0; i < 5; i++) {
+                    $('.sort ul').getElementsByTagName('img')[i].src = '/beijing' + index() + '.jpg'
+                    $('.sort ul').getElementsByTagName('p')[i].innerText = res[ind()].name
+                }
+            }
+
+
+        })
+
+        var index = function() {
+            return Math.floor(Math.random() * 52)
+        }
+        var ind = function() {
+            return Math.floor(Math.random() * 40)
+        }
+        var audio = new Audio()
+
+
+
+        function loadmusic() {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', 'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong', true)
+            xhr.onload = function() {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    var res = JSON.parse(xhr.responseText)
+                    console.log(res.song[0])
+                    play(res)
+
+                } else {
+                    console.log(error404)
+                }
+                xhr.onerror = function() {
+                    console.log('异常')
+                }
+            }
+            xhr.send()
+        }
+        loadmusic()
+
+        function play(list) {
+            console.log(list.song[0].url)
+            audio.src = list.song[0].url
+            audio.play()
+            $('.auther').innerText = list.song[0].artist
+            $('.title').innerText = list.song[0].title
+            $('.musicimg').style.backgroundImage = 'url(' + list.song[0].picture + ')'
+            $('.unactive .auther').innerText = list.song[0].artist
+            $('.unactive .title').innerText = list.song[0].title
+            $('.unactive .musicimg').style.backgroundImage = 'url(' + list.song[0].picture + ')'
+        }
+        audio.ontimeupdate = function() {
+            $('.progressnow').style.width = (audio.currentTime / audio.duration) * 100 + '%'
+            $('.unactive .progressnow').style.width = (audio.currentTime / audio.duration) * 100 + '%'
+        }
+        audio.onplay = function() {
+            $('.play').classList.remove('fa-play')
+            $('.play').classList.add('fa-pause')
+            $('.fa-music').classList.add('fa-spin')
+            clock = setInterval(function() {
+                $('.minute').innerText = Math.floor(audio.currentTime / 60)
+                var sec = Math.floor(audio.currentTime % 60)
+                $('.second').innerText =
+                    (sec + '').length == 2 ? sec : '0' + sec
+
+
+                $('.unactive .minute').innerText = Math.floor(audio.currentTime / 60)
+                var sec = Math.floor(audio.currentTime % 60)
+                $('.unactive .second').innerText =
+                    (sec + '').length == 2 ? sec : '0' + sec
+
+            }, 1000)
+
+
+
+        }
+        audio.onended = function() {
+                clearInterval(clock)
+                $('.fa-music').classList.remove('fa-spin')
+                $('.play').classList.remove('fa-pause')
+                $('.play').classList.add('fa-play')
+                $('.unactive').classList.add('hide')
+                setTimeout(function() {
+                    $('.sort').style.display = 'block'
+                    $('.panalplay').style.display = 'block'
+                }, 1000)
+
+            }
+            //$('.progress').onclick = function(e) {
+            // console.log(e)
+            //    audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width)) * audio.duration
+            // }
+        $('.sort ul').onclick = function(e) {
+            console.log(e)
+            loadmusic()
+        }
+        $('.fa-forward').onclick = function() {
+            loadmusic()
+        }
+        $('.play').onclick = function() {
+            if (audio.paused) {
+                audio.play()
+                $('.play').classList.add('fa-pause')
+                $('.play').classList.remove('fa-play')
+                $('.fa-music').classList.add('fa-spin')
+            } else {
+                audio.pause()
+                $('.play').classList.add('fa-play')
+                $('.play').classList.remove('fa-pause')
+                $('.fa-music').classList.remove('fa-spin')
+            }
+        }
+        var time = setTimeout(function() {
+            $('.sort').style.display = 'none'
+            $('.panalplay').style.display = 'none'
+            $('.unactive').style.display = 'block'
+        }, 10000)
+
+
+
+
+        time
+        window.onclick = window.onmousemove = window.onmouseup = window.onmousedown = function() {
+            cleartimeout(time)
+
+        }
+        window.onmousemove = function() {
+
+            $('.unactive').style.display = 'none'
+            $('.sort').style.display = 'block'
+            $('.panalplay').style.display = 'block'
+        }
+    </script>
+</body>
+
+</html>
