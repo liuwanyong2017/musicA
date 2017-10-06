@@ -82,6 +82,7 @@
         
         .bar span {
             margin-right: 20px;
+            display:inline-block;
         }
         
         .bar span:hover {
@@ -90,6 +91,7 @@
         
         .bar .fa-heart:hover {
             color: deeppink;
+            font-size:30px;
         }
         
         .message {
@@ -133,7 +135,7 @@
         .progressnow {
             height: 5px;
             background: black;
-            width: 50%;
+            width: 0%;
         }
         
         .timer {
@@ -495,6 +497,7 @@
         
         window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
            clearInterval(time)
+            time
 
         }
         window.onmousemove = function() {
