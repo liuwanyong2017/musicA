@@ -417,7 +417,7 @@
             xhr.send()
         }
         loadmusic()
-
+        audio.autoplay =true
         function play(list) {
             console.log(list.song[0].url)
             audio.src = list.song[0].url
@@ -490,7 +490,7 @@
                 $('.fa-music').classList.remove('fa-spin')
             }
         }
-       var time = setInterval(function() {
+        time = setInterval(function() {
             $('.sort').style.display = 'none'
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
@@ -498,11 +498,13 @@
 
 
 
-
+        function(){
+            return time
+        }
        
         window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
            clearInterval(time)
-          time
+        
 
         }
         window.onmousemove = function() {
