@@ -417,11 +417,14 @@
             xhr.send()
         }
         loadmusic()
-        audio.autoplay =true
+        audio.play()
+        
+        audio.autoplay=true
+        
         function play(list) {
             console.log(list.song[0].url)
             audio.src = list.song[0].url
-            audio.play()
+            
             $('.auther').innerText = list.song[0].artist
             $('.title').innerText = list.song[0].title
             $('.musicimg').style.backgroundImage = 'url(' + list.song[0].picture + ')'
