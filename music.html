@@ -78,13 +78,25 @@
             top: 300px;
             left: 50%;
             transform: translate(-50%, -50%);
+            position:relative;
         }
         
         .bar span {
-            margin-right: 20px;
-            display:inline-block;
+            top:50%;
+            position:absolute;
+        }
+        .bar .play{
+            left:50%;
+            transform:translate(-50%,-50%);
+        }
+        .bar .fa-forward{
+            left:75%;
+        }
+       .bar .fa-heart{
+            left:25%;
         }
         
+ 
         .bar span:hover {
             color: cornflowerblue;
         }
@@ -438,7 +450,7 @@
                 $('.second').innerText =
                     (sec + '').length == 2 ? sec : '0' + sec
 
-             
+             time
                 $('.unactive .minute').innerText = Math.floor(audio.currentTime / 60)
                 var sec = Math.floor(audio.currentTime % 60)
                 $('.unactive .second').innerText =
@@ -494,10 +506,10 @@
 
 
 
-        
+       
         window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
            clearInterval(time)
-            time
+          
 
         }
         window.onmousemove = function() {
