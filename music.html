@@ -535,7 +535,8 @@
         }
        pingbao()
         window.onmousemove = function() {
-
+            clearInterval(time)
+           return time
             $('.unactive').style.display = 'none'
             $('.sort').style.display = 'block'
             $('.panalplay').style.display = 'block'
