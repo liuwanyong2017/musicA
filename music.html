@@ -493,7 +493,7 @@
                 $('.fa-music').classList.remove('fa-spin')
             }
         }
-       var time = setInterval(function() {
+      time = setInterval(function() {
             $('.sort').style.display = 'none'
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
@@ -501,8 +501,7 @@
 
 
         function pingbao(){
-           return time
-       
+          
         window.onclick  = function() {
            clearInterval(time)
            return time
