@@ -459,7 +459,7 @@
                 $('.fa-music').classList.remove('fa-spin')
                 $('.play').classList.remove('fa-pause')
                 $('.play').classList.add('fa-play')
-                $('.unactive').classList.add('hide')
+                $('.unactive').style.display='none'
                 setTimeout(function() {
                     $('.sort').style.display = 'block'
                     $('.panalplay').style.display = 'block'
@@ -502,7 +502,7 @@
        
         window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
            clearInterval(time)
-        
+        time
 
         }
         window.onmousemove = function() {
