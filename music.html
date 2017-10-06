@@ -442,7 +442,7 @@
                 $('.second').innerText =
                     (sec + '').length == 2 ? sec : '0' + sec
 
-             time
+           
                 $('.unactive .minute').innerText = Math.floor(audio.currentTime / 60)
                 var sec = Math.floor(audio.currentTime % 60)
                 $('.unactive .second').innerText =
@@ -489,7 +489,7 @@
                 $('.fa-music').classList.remove('fa-spin')
             }
         }
-        time = setInterval(function() {
+       var time = setInterval(function() {
             $('.sort').style.display = 'none'
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
@@ -501,7 +501,7 @@
        
         window.onclick=window.onmousemove=window.onmousedown=window.onmouseup=window.ondbclick  = function() {
            clearInterval(time)
-          
+          time
 
         }
         window.onmousemove = function() {
