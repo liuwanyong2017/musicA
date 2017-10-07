@@ -512,10 +512,18 @@
                  $('.sort').style.display = 'block'
                  $('.panalplay').style.display = 'block'
                  $('.unactive').style.display = 'none'
-                return time
+                return time=setTimeout(function face(){
+             $('.sort').style.display = 'none'
+            $('.panalplay').style.display = 'none'
+            $('.unactive').style.display = 'block'
+        },10000)
             }else{
                 return clearTimeout(time)
-                time
+                time=setTimeout(function face(){
+             $('.sort').style.display = 'none'
+            $('.panalplay').style.display = 'none'
+            $('.unactive').style.display = 'block'
+        },10000)
             }
             
         }
