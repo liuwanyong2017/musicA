@@ -516,9 +516,10 @@
 
         }
 
-        window.onmousemove=throttle(face,10000)
+      
       
         window.onmousemove=function(){
+            throttle(face,10000)
              $('.sort').style.display = 'block'
             $('.panalplay').style.display = 'block'
             $('.unactive').style.display = 'none'
