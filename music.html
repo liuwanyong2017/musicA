@@ -508,11 +508,16 @@
       
       
         window.onmousemove= function(){
-            clearTimeout(time)
-             $('.sort').style.display = 'block'
-          $('.panalplay').style.display = 'block'
-      $('.unactive').style.display = 'none'
-            time
+            if($('.unactive').style.display == 'block')P{
+                 $('.sort').style.display = 'block'
+                 $('.panalplay').style.display = 'block'
+                 $('.unactive').style.display = 'none'
+                return time
+            }else{
+                return clearTimeout(time)
+                time
+            }
+            
         }
         
       
