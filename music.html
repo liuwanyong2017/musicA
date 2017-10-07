@@ -493,7 +493,7 @@
                 $('.fa-music').classList.remove('fa-spin')
             }
         }
-      var time = setInterval(function() {
+      var time = setTimeout(function() {
             $('.sort').style.display = 'none'
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
@@ -504,22 +504,22 @@
            time
        
         window.onclick  = function() {
-           clearInterval(time)
+           clearTimeout(time)
            time
 
         }
         window.ondbclick=function() {
-           clearInterval(time)
+           clearTimeout(time)
             time
 
         }
         window.onmouseup=function() {
-           clearInterval(time)
+           clearTimeout(time)
         time
 
         }
         window.onmousedown=function() {
-           clearInterval(time)
+           clearTimeout(time)
          time
 
         }
@@ -527,7 +527,7 @@
         }
     screensave()
        window.onmousemove=function() {
-           clearInterval(time)
+           clearTimeout(time)
             
              $('.sort').style.display = 'block'
             $('.panalplay').style.display = 'block'
