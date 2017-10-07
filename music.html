@@ -493,56 +493,43 @@
                 $('.fa-music').classList.remove('fa-spin')
             }
         }
-      var time = setTimeout(function() {
-            $('.sort').style.display = 'none'
+     
+
+
+       
+      
+       function face(){
+             $('.sort').style.display = 'none'
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
-        }, 10000)
-
-
-        function screensave(){
-           time
-       
-        window.onclick  = function() {
-           clearTimeout(time)
-            
-            time
-       
-
         }
-        window.ondbclick=function() {
-           clearTimeout(time)
-            
-           time
-    
+
+        function throttle(method,delay){
+            var timer=null;
+            return function(){
+                var context=this, args=arguments;
+                clearTimeout(timer);
+                timer=setTimeout(function(){
+                    method.apply(context,args);
+                },delay);
+            }
 
         }
-        window.onmouseup=function() {
-           clearTimeout(time)
-     
-               time
-     
 
-        }
-        window.onmousedown=function() {
-           clearTimeout(time)
-         
-               time
-     
-        }
-        
-        }
-    screensave()
-       window.onmousemove=function() {
-        
-            
+        window.onmousemove=throttle(face,10000)
+      
+        window.onmousemove=function(){
              $('.sort').style.display = 'block'
             $('.panalplay').style.display = 'block'
             $('.unactive').style.display = 'none'
-      
-               time
-     
         }
+     
+        
+            
+            
+      
+               
+        
     </script>
 </body>
 
