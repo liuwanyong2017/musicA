@@ -500,27 +500,12 @@
         }, 10000)
 
 
-       time
-        window.onmousemove=function() {
-           clearInterval(time)
-            time
-            console.log(e)
-          $('.unactive').style.display = 'none'
-            $('.sort').style.display = 'block'
-            $('.panalplay').style.display = 'block'
-    
-
-        }
-        window.onmousedown=function() {
-           clearInterval(time)
-        return time
-
-        }
-        
-         window.onclick  = function() {
+        function screensave(){
+           return time
+       
+        window.onclick  = function() {
            clearInterval(time)
            return time
-            console.log(e)
 
         }
         window.ondbclick=function() {
@@ -533,6 +518,22 @@
        return  time
 
         }
+        window.onmousedown=function() {
+           clearInterval(time)
+        return time
+
+        }
+        window.onmousemove=function() {
+           clearInterval(time)
+           return time
+             $('.sort').style.display = 'block'
+            $('.panalplay').style.display = 'block'
+            $('.unactive').style.display = 'none'
+
+        }
+        }
+    screensave()
+       
     </script>
 </body>
 
