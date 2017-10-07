@@ -503,25 +503,19 @@
             $('.panalplay').style.display = 'none'
             $('.unactive').style.display = 'block'
         }
-
-        function throttle(method,delay){
-            var timer=null;
-            return function(){
-                var context=this, args=arguments;
-                clearTimeout(timer);
-                timer=setTimeout(function(){
-                    method.apply(context,args);
-                },delay);
-            }
-
-        }
-
-       throttle(face,0)
+        time=setTimeout(face,10000)
+         
       
-        window.onmousemove= throttle(face,10000)
-           //  $('.sort').style.display = 'block'
-           // $('.panalplay').style.display = 'block'
-         //   $('.unactive').style.display = 'none'
+      
+        window.onmousemove= functrion(){
+            clearTimeout(time)
+             $('.sort').style.display = 'block'
+          $('.panalplay').style.display = 'block'
+      $('.unactive').style.display = 'none'
+            time
+        }
+        
+      
        
      
         
