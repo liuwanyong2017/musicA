@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐主页</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <meta name="referrer" content="no-referrer">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.2;
+            color: aliceblue;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            position: relative;
+        }
+        
+        .bg-bottom {
+            height: 100%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            filter: blur(4px);
+            background-size: cover;
+            z-index: -1;
+            background: linear-gradient(to right bottom, rgba(38, 157, 200, .6), rgba(150, 200, 250, .3)), url(beijing.jpeg) center center no-repeat;
+        }
+        
+        .bg {
+            height: 100%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            filter: blur(4px);
+            background-size: cover;
+            background: url(beijing.jpeg) center center no-repeat;
+        }
+        
+        .care {
+            display: none;
+        }
+        
+        .playpanal {
+            height: 78vh;
+            position: relative;
+            padding: 10vh 10vh 0 10vh;
+        }
+        
+        .playbg {
+            background: black;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 20vh;
+        }
+        
+        .panal {
+            float: left;
+        }
+        
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .panal figure {
+            height: 40vh;
+            width: 45vh;
+            background: url(beijing.jpeg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .panalbar {
+            margin-top: 8vh;
+            font-size: 4vh;
+            display: flex;
+            text-align: center;
+        }
+        
+        .panalbar span {
+            flex: 1;
+            transition: color .7s;
+            cursor: pointer;
+        }
+        
+        .panalbar span:hover {
+            color: cornflowerblue;
+        }
+        
+        .panalbar span:first-child:hover {
+            color: brown;
+        }
+        
+        .playpanal .message {
+            margin-left: 55vh;
+            text-align: left;
+            position: relative;
+        }
+        
+        .message .myname {
+            font-size: 3vh;
+            padding: 2px 10px;
+            background: rgba(49, 9, 145, 0.8);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .message h2 {
+            font-size: 5vh;
+            margin-top: 4vh;
+        }
+        
+        .message .elsemes {
+            font-size: 3vh;
+            margin-top: 3vh;
+        }
+        
+        .elsemes span {
+            margin-right: 8%;
+        }
+        
+        .progress {
+            background: cornflowerblue;
+            height: .8vh;
+            width: 80%;
+            flex: 1;
+            cursor: pointer;
+            border-radius: .8vh;
+        }
+        
+        .current-pro {
+            background: #1d04ad;
+            height: .8vh;
+            width: 0%;
+            opacity: 0.7;
+            border-radius: .8vh;
+        }
+        
+        .current {
+            display: flex;
+            margin-top: 6vh;
+            align-items: center;
+        }
+        
+        .timer {
+            margin-left: 2vh;
+            font-size: 0;
+            width: 8vh;
+        }
+        
+        .timer span {
+            font-size: 2vh;
+        }
+        
+        .fa-music {
+            color: red;
+            opacity: 0.4;
+            margin-top: 2vh;
+            font-size: 5vh;
+        }
+        
+        .title {
+            margin-top: 4vh;
+            font-size: 4vh;
+        }
+        
+        .auther {
+            opacity: 0.6;
+            font-size: 3vh;
+            margin-top: 3vh;
+        }
+        
+        .sortbg {
+            opacity: 0.3;
+            position: absolute;
+            top: 80vh;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+        }
+        
+        .sort .fa {
+            position: absolute;
+            cursor: pointer;
+            transition: all 1s;
+            opacity: 0;
+            color: rgba(14, 13, 13, 0.4);
+            font-size: 6vh;
+            top: 8vh;
+        }
+        
+        .sort:hover .fa {
+            opacity: .8;
+        }
+        
+        .sort .fa:hover {
+            color: rgba(53, 10, 170, 0.6);
+        }
+        
+        .sort .fa-chevron-left {
+            left: 4vh;
+        }
+        
+        .sort .fa-chevron-right {
+            right: 4vh;
+        }
+        
+        .sort {
+            position: relative;
+            margin-bottom: 0vh;
+            padding: 2vh 10vh 0 10vh;
+            height: 22vh;
+            width: 100%;
+        }
+        
+        .sort figure {
+            height: 13vh;
+            background: url(beijing.jpg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .sort p {
+            font-size: 2vh;
+            margin-top: 1vh;
+        }
+        
+        .sort ul:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .sort ul li {
+            width: 18vh;
+            float: left;
+            list-style: none;
+            text-align: center;
+            margin-right: 15px;
+            margin-bottom: 4vh;
+            cursor: pointer;
+        }
+        
+        .sort .box ul {
+            position: absolute;
+            left: 0;
+        }
+        
+        .sort .box {
+            overflow: hidden;
+            position: relative;
+            height: 20vh;
+            padding-top: 2vh;
+        }
+        
+        .sort ul li:hover {
+            box-shadow: 0px -.25vh .25vh .25vh rgba(255, 255, 255, .7);
+        }
+        
+        .sort ul li.active {
+            box-shadow: .5vh .5vh .5vh .5vh rgba(45, 9, 206, 0.5);
+        }
+        
+        main {
+            display: block;
+            overflow: hidden;
+        }
+        
+        .care figure {
+            position: absolute;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50vh;
+            height: 45vh;
+            background: url(beijing.jpeg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .unactive {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 25vh;
+            text-align: center;
+        }
+        
+        .unbg {
+            opacity: 0.2;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+        }
+        
+        .unactive .progress {
+            width: 100%;
+        }
+        
+        .unactive .timer {
+            margin-left: 80%;
+            font-size: 0;
+        }
+        
+        .unactive .timerspan {
+            font-size: 4vh;
+            color: aquamarine;
+            opacity: .6;
+        }
+        
+        .lyrics {
+            font-size: 4vh;
+            margin-top: 3vh;
+            position: relative;
+            height: 8vh;
+        }
+        
+        .fa-leaf {
+            position: absolute;
+            opacity: 0.5;
+            color: rgb(27, 218, 74);
+            font-size: 7vh;
+        }
+        
+        .lyrics ul {
+            text-align: center;
+        }
+        
+        .lyrics li {
+            height: 4vh;
+            display: none;
+            list-style: none;
+            color: cyan;
+        }
+        
+        .fa-star {
+            font-size: 4vh;
+            position: absolute;
+            color: yellow;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bg-bottom"></div>
+    <div class="bg"></div>
+    <main>
+        <span class="fa-star star1  fa"></span>
+        <span class="fa-star star2 fa"></span>
+        <span class="fa-star star3 fa"></span>
+        <span class="fa-star star4 fa"></span>
+        <span class="fa-star star5 fa"></span>
+        <span class="fa-star star6 fa"></span>
+        <span class="fa-star star7 fa"></span>
+        <span class="fa-leaf leaf1 fa fa-3x fa-fw"></span>
+        <span class="fa-leaf fa leaf2 fa-3x fa-fw"></span>
+        <span class="fa-leaf fa leaf3 fa-3x fa-fw"></span>
+        <span class="fa-leaf fa leaf4 fa-3x fa-fw"></span>
+        <span class="fa-leaf fa fa-3x leaf5 fa-fw"></span>
+        <span class="fa-leaf fa fa-3x leaf6 fa-fw"></span>
+        <div class="playbg"></div>
+        <div class="playpanal clearfix">
+
+            <div class="panal ">
+                <figure></figure>
+                <div class="panalbar">
+                    <span class="fa-heart fa"></span>
+                    <span class="fa-play play fa"></span>
+                    <span class="fa-forward fa"></span>
+                </div>
+            </div>
+            <div class="message">
+                <span class="myname">流着万条永远的河</span>
+                <h2>just for fun!</h2>
+                <div class="elsemes">
+                    <span class="fa-headphones fa">&nbsp;&nbsp;43545</span>
+                    <span class="fa-heart fa">&nbsp;&nbsp;4655</span>
+                    <span class="fa-podcast fa">&nbsp;&nbsp;LavaRadio</span>
+                </div>
+                <div class="current">
+                    <div class="progress">
+                        <div class="current-pro"></div>
+
+                    </div>
+                    <div class="timer">
+                        <span class="minute">0</span>
+                        <span>:</span>
+                        <span class="second">00</span>
+                    </div>
+                </div>
+
+                <span class="fa-music fa  fa-3x fa-fw"></span>
+                <div class="title">My song</div>
+                <div class="auther">auther</div>
+                <div class="lyrics">
+
+                    <ul>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="sortbg"></div>
+
+
+        <div class="sort">
+            <span class="fa fa-chevron-right"></span>
+            <span class="fa fa-chevron-left"></span>
+            <div class="box">
+                <ul>
+
+                </ul>
+            </div>
+
+
+
+        </div>
+    </main>
+    <div class="care">
+        <figure></figure>
+        <div class="unactive">
+            <div class="unbg"></div>
+
+            <div class="progress">
+                <div class="current-pro"></div>
+
+            </div>
+            <div class="timer">
+                <span class="minute">0</span>
+                <span>:</span>
+                <span class="second">00</span>
+            </div>
+            <div class="title">My song</div>
+            <div class="auther">auther</div>
+        </div>
+    </div>
+    <script>
+        var footer = {
+            init: function() {
+                this.$sort = $('.sort')
+                this.$ul = $('.sort ul')
+                this.$box = $('.sort .box')
+                this.$leftbtn = $('.fa-chevron-left')
+                this.$rightbtn = $('.fa-chevron-right')
+                this.bind()
+                this.render()
+                this.toend = false
+                this.tostart = false
+            },
+            bind: function() {
+
+                var self = this
+
+                this.$rightbtn.click(function() {
+                    var liwid = self.$sort.find('li').outerWidth(true)
+                    var boxwid = self.$box.width()
+                    if ((parseFloat(self.$box.width()) - parseFloat(self.$ul.css('left'))) >= parseFloat(self.$ul.width())) {
+                        self.toend = true
+                    };
+                    if (!self.toend) {
+                        self.$ul.animate({
+                            left: '-=' + (liwid * Math.floor(boxwid / liwid))
+                        }, 600, function() {
+                            console.log(self.$ul.css('left'), self.$ul.width(), self.$box.width())
+                            self.tostart = false
+                        })
+                    }
+                })
+                this.$leftbtn.click(function() {
+                    var liwid = self.$sort.find('li').outerWidth(true)
+                    var boxwid = self.$box.width()
+
+                    if (parseFloat(self.$ul.css('left')) >= 0) {
+                        self.tostart = true
+                    }
+                    console.log(self.tostart)
+                    if (!self.tostart) {
+                        self.$ul.animate({
+                            left: '+=' + (liwid * Math.floor(boxwid / liwid))
+                        }, 600, function() {
+                            self.toend = false
+                        })
+
+                    }
+
+                })
+                this.$sort.on('click', 'li', function() {
+                    $(this).addClass('active').siblings().removeClass('active')
+                    Eventcenter.fire('sortclick', $(this).attr('data-channel-id'))
+                })
+            },
+            render: function() {
+                var self = this
+                $.ajax({
+                    url: 'https://jirenguapi.applinzi.com/fm/getChannels.php',
+                    dataType: 'jsonp',
+                    mesold: 'GET'
+                }).done(function(ret) {
+                    console.log(ret.channels)
+                    setsort(ret.channels)
+                    self.setstyle()
+                }).fail(function() {
+                    console.log('error...')
+                })
+            },
+            setstyle: function() {
+                var count = this.$sort.find('li').length
+                var width = this.$sort.find('li').outerWidth(true)
+                this.$ul.css({
+                    width: count * width + 'px'
+                })
+                console.log(count, width)
+            }
+        }
+        footer.init()
+
+
+        function setsort(data) {
+            data.forEach(function(sort) {
+                var tal = '<li data-channel-id=' + sort.channel_id + '>' +
+                    '<figure></figure>' +
+                    '<p>haha</p>' +
+                    '</li>'
+                var $node = $(tal)
+                $node.find('figure').css({
+                    background: 'url(' + sort.cover_small + ')'
+                })
+                $node.find('p').text(sort.name)
+                $('.sort ul').append($node)
+            })
+        }
+        var Eventcenter = {
+            on: function(type, handler) {
+                $(document).on(type, handler)
+            },
+            fire: function(type, data) {
+                $(document).trigger(type, data)
+            }
+        }
+
+        var audio = new Audio()
+            //'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong'
+        function loadmusic(data) {
+            $.getJSON('https://jirenguapi.applinzi.com/fm/getSong.php? ', {
+                    channel: '' + data
+                })
+                .done(function(ret) {
+                    console.log(ret.song[0])
+                    playmusic(ret.song[0])
+                })
+
+        }
+
+        function playmusic(data) {
+
+            $('.play').removeClass('fa-play').addClass('fa-pause')
+            $('.panal figure').css({
+                background: 'url(' + data.picture + ')' + ' center center no-repeat'
+            })
+            $('.bg').css({
+                background: 'url(' + data.picture + ')' + ' center center no-repeat',
+                backgroundSize: 'cover'
+
+            })
+            $('.care figure').css({
+                background: 'url(' + data.picture + ')' + ' center center no-repeat'
+            })
+            $('.title').text(data.title)
+            $('.auther').text(data.artist)
+            $('.fa-music').addClass('fa-spin')
+            audio.src = data.url
+            audio.play()
+            getlyrics(data.sid)
+        }
+
+        function getlyrics(data) {
+            $.getJSON('https://jirenguapi.applinzi.com/fm/getLyric.php', {
+                    sid: data
+                })
+                .done(function(ret) {
+                    //console.log(ret.lyric)
+                    setlyr(ret.lyric)
+                })
+        }
+
+        function setlyr(data) {
+
+            var arrtime = (data + '').match(/\d{2}:\d{2}.\d{2}.*?/g)
+                //console.log(arrtime)
+            var arrlyr = (data + '').split(/\[\d{2}:\d{2}.\d{2}\].*?/g)
+
+            arrlyr.shift()
+            $('.lyrics ul').html('')
+            console.log(arrlyr)
+            arrlyr.forEach(function(lyr) {
+                var html = '<li>' + lyr + '</li>'
+                var $node = $(html)
+                $('.lyrics ul').append($node)
+            })
+            dotime(arrtime)
+        }
+
+        function dotime(data) {
+            var arrtim = []
+
+            data.forEach(function(ret) {
+                    ret.split(/:/)
+
+                    arrtim.push(ret.split(/:/))
+                    for (var i = 0; i < arrtim.length; i++) {
+                        arrtim[i][0] = parseInt(arrtim[i][0], 10)
+                        arrtim[i][1] = parseFloat(arrtim[i][1])
+                    }
+                })
+                //console.log(arrtim)
+            var arrti = []
+            arrtim.forEach(function(tim) {
+
+                    arrti.push(tim[0] * 60 + tim[1])
+                    arrti.sort(function(a, b) {
+                        return a - b
+                    })
+                    return arrti
+                })
+                //console.log((arrti))
+
+            compare(arrti)
+
+
+        }
+        audio.ontimeupdate = function() {
+            $('.current-pro').css({
+                width: (audio.currentTime / audio.duration) * 100 + '%',
+                opacity: '0.6'
+            })
+
+        }
+
+        function compare(data) {
+            console.log(data)
+            var isontime
+            setInterval(function() {
+
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i] < audio.currentTime && data[i + 1] > audio.currentTime) {
+                        // console.log(i * ($('.lyrics ul li').outerHeight(true)))
+                        //$('.lyrics ul').css({
+
+                        //     position: 'absolute',
+                        //     top: '-' + i * ($('.lyrics ul li').outerHeight(true)) + 'vh'
+                        //  })
+                        //console.log(i)
+                        //console.log($('.lyrics ul li:visible').index())
+                        // if (i === $('.lyrics ul li[isshow]').index()) return;
+                        console.log(i, isontime)
+                        if (i === isontime) return;
+                        isontime = i
+                        $('.lyrics ul li').eq(i).css({
+                            display: 'block',
+                            opacity: '0.6',
+                        }).attr('isshow', true).siblings('li').css({
+                            display: 'none'
+                        })
+
+                    }
+                }
+            }, 600)
+        }
+        setInterval(function() {
+            //$('.fa-leaf').each(function(node) {
+
+            //    $(node).css({
+            //        top: index(),
+            //      left: index()
+            //})
+            // })
+            $('.leaf6').css({
+                top: index(),
+                left: index()
+            })
+            $('.leaf5').css({
+                top: index(),
+                left: index()
+            })
+            $('.leaf1').css({
+                top: index(),
+                left: index()
+            })
+            $('.leaf2').css({
+                top: index(),
+                left: index()
+            })
+            $('.leaf3').css({
+                top: index(),
+                left: index()
+            })
+            $('.leaf4').css({
+                top: index(),
+                left: index()
+            })
+            $('.star1').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+            $('.star2').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+            $('.star3').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+            $('.star4').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+            $('.star5').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+            $('.star6').css({
+                top: index(),
+                left: index(),
+                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+            })
+        }, 1000)
+        audio.onplay = function() {
+            clock = setInterval(function() {
+                $('.minute').text(Math.floor(audio.currentTime / 60))
+                var sec = Math.floor(audio.currentTime % 60)
+                $('.second').text(function() {
+                    return ('' + sec).length === 2 ? sec : '0' + sec
+                })
+            }, 1000)
+        }
+        audio.onended = function() {
+            $('.play').addClass('fa-play').removeClass('fa-pause')
+            $('.fa-music').removeClass('fa-spin')
+        }
+
+        var app = {
+            init: function() {
+                this.$main = $('main')
+                this.$care = $('.care')
+                this.$window = $(window)
+                this.$progress = $('.progress')
+                this.$forward = $('.fa-forward')
+                this.$play = $('.play')
+                this.$music = $('.fa-music')
+                this.bind()
+            },
+            bind: function() {
+                var self = this
+                Eventcenter.on('sortclick', function(e, data) {
+                    console.log(e, data)
+                    loadmusic(data)
+                    self.$forward.on('click', function() {
+                        loadmusic(data)
+                    })
+                })
+                this.$play.on('click', function() {
+                    if (audio.paused) {
+                        audio.play()
+                        $(this).addClass('fa-pause').removeClass('fa-play')
+                        self.$music.addClass('fa-spin')
+
+                    } else {
+                        audio.pause()
+                        $(this).addClass('fa-play').removeClass('fa-pause')
+                        self.$music.removeClass('fa-spin')
+                    }
+                })
+                this.$progress.on('click', function(e) {
+                        console.log(e.offsetX)
+                        audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width, 10)) * audio.duration
+                    })
+                    //css({display:'none'}).css({display:'block'})
+                timeon = setTimeout(function() {
+                    $('main').hide()
+                    $('.care').fadeIn()
+                }, 10000)
+                this.$window.on('click', function() {
+                    var self = this
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mouseup', function() {
+                    var self = this
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mousemove', function() {
+                    var self = this
+                    clearTimeout(timeon)
+                    $('main').css({
+                        display: 'block'
+                    })
+                    $('.care').css({
+                        display: 'none'
+                    })
+                    timeon = setTimeout(function() {
+                        $('main').css({
+                            display: 'none'
+                        })
+                        $('.care').css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mousedown', function() {
+                    var self = this
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        $('main').css({
+                            display: 'none'
+                        })
+                        $('.care').css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('dbclick', function() {
+                    var self = this
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        $('main').css({
+                            display: 'none'
+                        })
+                        $('.care').css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+
+            },
+        }
+        app.init()
+
+        function index() {
+            return Math.random() * 100 + "%"
+        }
+
+        function ind() {
+            return Math.floor(Math.random() * 255) + 1
+        }
+    </script>
+</body>
+
+</html>
