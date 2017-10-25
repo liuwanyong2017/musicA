@@ -9,6 +9,7 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
     <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
     <style>
         * {
             margin: 0;
@@ -36,7 +37,6 @@
             bottom: -10px;
             filter: blur(4px);
             background-size: cover;
-            z-index: -1;
             background: linear-gradient(to right bottom, rgba(38, 157, 200, .6), rgba(150, 200, 250, .3)), url(beijing.jpeg) center center no-repeat;
         }
         
@@ -127,6 +127,8 @@
         .message h2 {
             font-size: 5vh;
             margin-top: 4vh;
+            text-shadow: 0 0 10px #fff;
+            color: transparent;
         }
         
         .message .elsemes {
@@ -153,6 +155,7 @@
             width: 0%;
             opacity: 0.7;
             border-radius: .8vh;
+            transition: all .8s;
         }
         
         .current {
@@ -181,6 +184,7 @@
         .title {
             margin-top: 4vh;
             font-size: 4vh;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
         }
         
         .auther {
@@ -213,6 +217,10 @@
             opacity: .8;
         }
         
+        .sort:hover p {
+            color: #1d04ad;
+        }
+        
         .sort .fa:hover {
             color: rgba(53, 10, 170, 0.6);
         }
@@ -242,6 +250,8 @@
         .sort p {
             font-size: 2vh;
             margin-top: 1vh;
+            color: #fff;
+            opacity: 0.7;
         }
         
         .sort ul:after {
@@ -305,35 +315,46 @@
         }
         
         .unbg {
-            opacity: 0.2;
+            opacity: 0.4;
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: #fff;
+            background: #000;
         }
         
         .unactive .progress {
             width: 100%;
         }
         
+        .unactive .title {
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+            opacity: .8;
+        }
+        
         .unactive .timer {
             margin-left: 80%;
             font-size: 0;
+            display: flex;
+            width: 9vh;
+            position: absolute;
         }
         
-        .unactive .timerspan {
+        .unactive .timer span {
             font-size: 4vh;
+            width: 3vh;
             color: aquamarine;
+            flex: 1;
             opacity: .6;
         }
         
         .lyrics {
             font-size: 4vh;
             margin-top: 3vh;
-            position: relative;
-            height: 8vh;
+            height: 6vh;
+            color: aqua;
+            opacity: .8;
         }
         
         .fa-leaf {
@@ -341,23 +362,14 @@
             opacity: 0.5;
             color: rgb(27, 218, 74);
             font-size: 7vh;
-        }
-        
-        .lyrics ul {
-            text-align: center;
-        }
-        
-        .lyrics li {
-            height: 4vh;
-            display: none;
-            list-style: none;
-            color: cyan;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
         }
         
         .fa-star {
             font-size: 4vh;
             position: absolute;
             color: yellow;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
         }
     </style>
 
@@ -367,6 +379,7 @@
     <div class="bg-bottom"></div>
     <div class="bg"></div>
     <main>
+        <span class="fa-leaf fa  fa-3x fa-fw"></span>
         <span class="fa-star star1  fa"></span>
         <span class="fa-star star2 fa"></span>
         <span class="fa-star star3 fa"></span>
@@ -415,10 +428,7 @@
                 <div class="title">My song</div>
                 <div class="auther">auther</div>
                 <div class="lyrics">
-
-                    <ul>
-
-                    </ul>
+                    <p></p>
                 </div>
             </div>
 
@@ -458,6 +468,80 @@
         </div>
     </div>
     <script>
+        // $.fn.boomText = function(type) {
+        $.fn.boomText = function(type) {
+                //console.log('haha')
+                //console.log(this)
+                type = type || 'rollIn'
+                var str = ''
+
+                for (var i = 0; i < $(this).text().length; i++) {
+                    str += '<span' + ' style="display:inline-block"' + ' class=' + "boomText" + '>' + $(this).text()[i] + '</span>'
+                }
+                //console.log(str)
+                this.html(str)
+
+                var index = 0
+                var $node = $(this).find('span')
+                var clock = setInterval(function() {
+                    $node.eq(index).addClass('animated ' + type).css({
+                        //color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+                        color: 'aqua',
+                        //opacity: '1'
+                    })
+                    index++
+                    if (index >= $node.length) {
+                        clearInterval(clock)
+                    }
+                }, 300)
+
+
+            }
+            /* console.log('haha')
+                 //console.log(this)
+             type = type || 'rollIn'
+             var str = ''
+
+             for (var i = 0; i < $(this).text().length; i++) {
+                 str += '<span' + ' class=' + "boomText" + ' style="display:inline-block"' + '>' + $(this).text()[i] + '</span>'
+             }
+             //console.log(str)
+             this.html(str)
+             var index = 0
+             var $node = $(this).find('span')
+             var clock = setInterval(function() {
+                 $node.eq(index).addClass('animated' + type)
+                 index++
+                 if (index >= $node.length) {
+                     clearInterval(clock)
+                 }
+             }, 200)
+
+
+             } 
+
+              $.fn.boomText = function(type) {
+                   type = type || 'rollIn'
+                   console.log(type)
+                   this.html(function() {
+                       var arr = $(this).text()
+                           .split('').map(function(word) {
+                               return '<span class="boomText">' + word + '</span>'
+                           })
+                       return arr.join('')
+                   })
+
+                   var index = 0
+                   var $boomTexts = $(this).find('span')
+                   var clock = setInterval(function() {
+                       $boomTexts.eq(index).addClass('animated ' + type)
+                       index++
+                       if (index >= $boomTexts.length) {
+                           clearInterval(clock)
+                       }
+                   }, 300)
+               }
+               */
         var footer = {
             init: function() {
                 this.$sort = $('.sort')
@@ -473,19 +557,23 @@
             bind: function() {
 
                 var self = this
-
+                var ismove
                 this.$rightbtn.click(function() {
                     var liwid = self.$sort.find('li').outerWidth(true)
                     var boxwid = self.$box.width()
+
+                    if (ismove) return;
                     if ((parseFloat(self.$box.width()) - parseFloat(self.$ul.css('left'))) >= parseFloat(self.$ul.width())) {
                         self.toend = true
                     };
                     if (!self.toend) {
+                        ismove = true
                         self.$ul.animate({
                             left: '-=' + (liwid * Math.floor(boxwid / liwid))
                         }, 600, function() {
-                            console.log(self.$ul.css('left'), self.$ul.width(), self.$box.width())
+                            //console.log(self.$ul.css('left'), self.$ul.width(), self.$box.width())
                             self.tostart = false
+                            ismove = false
                         })
                     }
                 })
@@ -493,15 +581,19 @@
                     var liwid = self.$sort.find('li').outerWidth(true)
                     var boxwid = self.$box.width()
 
+                    if (ismove) return;
                     if (parseFloat(self.$ul.css('left')) >= 0) {
                         self.tostart = true
                     }
-                    console.log(self.tostart)
+                    //console.log(self.tostart)
                     if (!self.tostart) {
+
+                        ismove = true
                         self.$ul.animate({
                             left: '+=' + (liwid * Math.floor(boxwid / liwid))
                         }, 600, function() {
                             self.toend = false
+                            ismove = false
                         })
 
                     }
@@ -509,7 +601,10 @@
                 })
                 this.$sort.on('click', 'li', function() {
                     $(this).addClass('active').siblings().removeClass('active')
-                    Eventcenter.fire('sortclick', $(this).attr('data-channel-id'))
+                    Eventcenter.fire('sortclick', {
+                        channelid: $(this).attr('data-channel-id'),
+                        channelname: $(this).attr('data-channel-name')
+                    })
                 })
             },
             render: function() {
@@ -520,7 +615,7 @@
                     mesold: 'GET'
                 }).done(function(ret) {
                     console.log(ret.channels)
-                    setsort(ret.channels)
+                    self.setsort(ret.channels)
                     self.setstyle()
                 }).fail(function() {
                     console.log('error...')
@@ -533,25 +628,27 @@
                     width: count * width + 'px'
                 })
                 console.log(count, width)
-            }
+            },
+            setsort: function(data) {
+                data.forEach(function(sort) {
+                    var tal = '<li data-channel-id=' + sort.channel_id + ' data-channel-name=' + sort.name + '>' +
+                        '<figure></figure>' +
+                        '<p>haha</p>' +
+                        '</li>'
+                    var $node = $(tal)
+                    $node.find('figure').css({
+                        background: 'url(' + sort.cover_small + ')'
+                    })
+                    $node.find('p').text(sort.name)
+                    $('.sort ul').append($node)
+                })
+            },
+
         }
         footer.init()
 
 
-        function setsort(data) {
-            data.forEach(function(sort) {
-                var tal = '<li data-channel-id=' + sort.channel_id + '>' +
-                    '<figure></figure>' +
-                    '<p>haha</p>' +
-                    '</li>'
-                var $node = $(tal)
-                $node.find('figure').css({
-                    background: 'url(' + sort.cover_small + ')'
-                })
-                $node.find('p').text(sort.name)
-                $('.sort ul').append($node)
-            })
-        }
+
         var Eventcenter = {
             on: function(type, handler) {
                 $(document).on(type, handler)
@@ -561,220 +658,95 @@
             }
         }
 
-        var audio = new Audio()
-            //'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong'
-        function loadmusic(data) {
-            $.getJSON('https://jirenguapi.applinzi.com/fm/getSong.php? ', {
-                    channel: '' + data
-                })
-                .done(function(ret) {
-                    console.log(ret.song[0])
-                    playmusic(ret.song[0])
-                })
 
-        }
-
-        function playmusic(data) {
-
-            $('.play').removeClass('fa-play').addClass('fa-pause')
-            $('.panal figure').css({
-                background: 'url(' + data.picture + ')' + ' center center no-repeat'
-            })
-            $('.bg').css({
-                background: 'url(' + data.picture + ')' + ' center center no-repeat',
-                backgroundSize: 'cover'
-
-            })
-            $('.care figure').css({
-                background: 'url(' + data.picture + ')' + ' center center no-repeat'
-            })
-            $('.title').text(data.title)
-            $('.auther').text(data.artist)
-            $('.fa-music').addClass('fa-spin')
-            audio.src = data.url
-            audio.play()
-            getlyrics(data.sid)
-        }
-
-        function getlyrics(data) {
-            $.getJSON('https://jirenguapi.applinzi.com/fm/getLyric.php', {
-                    sid: data
-                })
-                .done(function(ret) {
-                    //console.log(ret.lyric)
-                    setlyr(ret.lyric)
-                })
-        }
-
-        function setlyr(data) {
-
-            var arrtime = (data + '').match(/\d{2}:\d{2}.\d{2}.*?/g)
-                //console.log(arrtime)
-            var arrlyr = (data + '').split(/\[\d{2}:\d{2}.\d{2}\].*?/g)
-
-            arrlyr.shift()
-            $('.lyrics ul').html('')
-            console.log(arrlyr)
-            arrlyr.forEach(function(lyr) {
-                var html = '<li>' + lyr + '</li>'
-                var $node = $(html)
-                $('.lyrics ul').append($node)
-            })
-            dotime(arrtime)
-        }
-
-        function dotime(data) {
-            var arrtim = []
-
-            data.forEach(function(ret) {
-                    ret.split(/:/)
-
-                    arrtim.push(ret.split(/:/))
-                    for (var i = 0; i < arrtim.length; i++) {
-                        arrtim[i][0] = parseInt(arrtim[i][0], 10)
-                        arrtim[i][1] = parseFloat(arrtim[i][1])
-                    }
-                })
-                //console.log(arrtim)
-            var arrti = []
-            arrtim.forEach(function(tim) {
-
-                    arrti.push(tim[0] * 60 + tim[1])
-                    arrti.sort(function(a, b) {
-                        return a - b
-                    })
-                    return arrti
-                })
-                //console.log((arrti))
-
-            compare(arrti)
+        //'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong'
 
 
-        }
-        audio.ontimeupdate = function() {
-            $('.current-pro').css({
-                width: (audio.currentTime / audio.duration) * 100 + '%',
-                opacity: '0.6'
-            })
 
-        }
 
-        function compare(data) {
-            console.log(data)
-            var isontime
-            setInterval(function() {
 
-                for (var i = 0; i < data.length; i++) {
 
-                    if (data[i] < audio.currentTime && data[i + 1] > audio.currentTime) {
-                        // console.log(i * ($('.lyrics ul li').outerHeight(true)))
-                        //$('.lyrics ul').css({
 
-                        //     position: 'absolute',
-                        //     top: '-' + i * ($('.lyrics ul li').outerHeight(true)) + 'vh'
-                        //  })
-                        //console.log(i)
-                        //console.log($('.lyrics ul li:visible').index())
-                        // if (i === $('.lyrics ul li[isshow]').index()) return;
-                        console.log(i, isontime)
-                        if (i === isontime) return;
-                        isontime = i
-                        $('.lyrics ul li').eq(i).css({
-                            display: 'block',
-                            opacity: '0.6',
-                        }).attr('isshow', true).siblings('li').css({
-                            display: 'none'
-                        })
 
-                    }
-                }
-            }, 600)
-        }
-        setInterval(function() {
-            //$('.fa-leaf').each(function(node) {
+        /* function dotime(data) {
+             var arrtim = []
 
-            //    $(node).css({
-            //        top: index(),
-            //      left: index()
-            //})
-            // })
-            $('.leaf6').css({
-                top: index(),
-                left: index()
-            })
-            $('.leaf5').css({
-                top: index(),
-                left: index()
-            })
-            $('.leaf1').css({
-                top: index(),
-                left: index()
-            })
-            $('.leaf2').css({
-                top: index(),
-                left: index()
-            })
-            $('.leaf3').css({
-                top: index(),
-                left: index()
-            })
-            $('.leaf4').css({
-                top: index(),
-                left: index()
-            })
-            $('.star1').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-            $('.star2').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-            $('.star3').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-            $('.star4').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-            $('.star5').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-            $('.star6').css({
-                top: index(),
-                left: index(),
-                color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-            })
-        }, 1000)
-        audio.onplay = function() {
-            clock = setInterval(function() {
-                $('.minute').text(Math.floor(audio.currentTime / 60))
-                var sec = Math.floor(audio.currentTime % 60)
-                $('.second').text(function() {
-                    return ('' + sec).length === 2 ? sec : '0' + sec
-                })
-            }, 1000)
-        }
-        audio.onended = function() {
-            $('.play').addClass('fa-play').removeClass('fa-pause')
-            $('.fa-music').removeClass('fa-spin')
-        }
+             data.forEach(function(ret) {
+                     ret.split(/:/)
+
+                     arrtim.push(ret.split(/:/))
+                     for (var i = 0; i < arrtim.length; i++) {
+                         arrtim[i][0] = parseInt(arrtim[i][0], 10)
+                         arrtim[i][1] = parseFloat(arrtim[i][1])
+                     }
+                 })
+                 //console.log(arrtim)
+             var arrti = []
+             arrtim.forEach(function(tim) {
+
+                     arrti.push(tim[0] * 60 + tim[1])
+                     arrti.sort(function(a, b) {
+                         return a - b
+                     })
+                     return arrti
+                 })
+                 //console.log((arrti))
+
+             compare(arrti)
+
+
+         }
+
+
+         function compare(data) {
+             console.log(data)
+             var isontime
+             setInterval(function() {
+
+                 for (var i = 0; i < data.length; i++) {
+
+                     if (data[i] < audio.currentTime && data[i + 1] > audio.currentTime) {
+                         // console.log(i * ($('.lyrics ul li').outerHeight(true)))
+                         //$('.lyrics ul').css({
+
+                         //     position: 'absolute',
+                         //     top: '-' + i * ($('.lyrics ul li').outerHeight(true)) + 'vh'
+                         //  })
+                         //console.log(i)
+                         //console.log($('.lyrics ul li:visible').index())
+                         // if (i === $('.lyrics ul li[isshow]').index()) return;
+                         // console.log(i, isontime)
+                         if (i === isontime) return;
+                         isontime = i
+                         $('.lyrics ul li').eq(i).css({
+                             display: 'block',
+                             opacity: '0.6',
+                         }).attr('isshow', true).siblings('li').css({
+                             display: 'none'
+                         })
+
+                     }
+                 }
+             }, 600)
+         }*/
+
+
 
         var app = {
             init: function() {
+                this.audio = new Audio()
+                this.audio.autoplay = true
+                this.channelid
                 this.$main = $('main')
                 this.$care = $('.care')
+                this.channelname
                 this.$window = $(window)
                 this.$progress = $('.progress')
                 this.$forward = $('.fa-forward')
                 this.$play = $('.play')
+                this.lyrobj
+                this.timeobj
+                this.like = {}
                 this.$music = $('.fa-music')
                 this.bind()
             },
@@ -782,26 +754,79 @@
                 var self = this
                 Eventcenter.on('sortclick', function(e, data) {
                     console.log(e, data)
-                    loadmusic(data)
-                    self.$forward.on('click', function() {
-                        loadmusic(data)
+                    self.channelid = data.channelid
+                    self.channelname = data.channelname
+                    self.loadmusic(data.channelid)
+
+                })
+                this.audio.ontimeupdate = function() {
+
+                    $('.current-pro').css({
+                        width: (self.audio.currentTime / self.audio.duration) * 100 + '%',
+                        opacity: '0.6'
                     })
+
+                }
+
+
+
+
+                this.$main.find('.panalbar .fa-heart').on('click', function() {
+
+                    console.log('like')
+                    if (self.audio.src) {
+                        var obj
+                        obj.src = self.audio.src
+                        obj.title = self.$main.find('.title').text()
+                        obj.auther = self.$main.find('.auther').text()
+                        obj.channelid = self.channelid
+                        obj.channelname = self.channelname
+                        obj.picture = $('.bg').attr('')
+                    }
+                })
+
+
+
+
+                this.$forward.on('click', function() {
+                    self.like = {}
+                    self.loadmusic(self.channelid)
+                    self.like.channelid = self.channelid
                 })
                 this.$play.on('click', function() {
-                    if (audio.paused) {
-                        audio.play()
+                    if (self.audio.paused) {
+                        self.audio.play()
                         $(this).addClass('fa-pause').removeClass('fa-play')
                         self.$music.addClass('fa-spin')
 
                     } else {
-                        audio.pause()
+                        self.audio.pause()
                         $(this).addClass('fa-play').removeClass('fa-pause')
                         self.$music.removeClass('fa-spin')
                     }
                 })
+                this.audio.onplay = function() {
+                    clock = setInterval(function() {
+                        $('.minute').text(Math.floor(self.audio.currentTime / 60))
+                        var sec = Math.floor(self.audio.currentTime % 60)
+                        $('.second').text(function() {
+                            return ('' + sec).length === 2 ? sec : '0' + sec
+                        })
+                    }, 1000)
+                }
+                this.audio.onpaused = function() {
+                    clearInterval(showlyr)
+                    clearInterval(clock)
+                    $('.play').addClass('fa-play').removeClass('fa-pause')
+                    $('.fa-music').removeClass('fa-spin')
+                }
+                this.audio.onended = function() {
+                    self.loadmusic(self.channelid)
+                    self.like = {}
+                }
                 this.$progress.on('click', function(e) {
                         console.log(e.offsetX)
-                        audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width, 10)) * audio.duration
+                        self.audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width, 10)) * self.audio.duration
                     })
                     //css({display:'none'}).css({display:'block'})
                 timeon = setTimeout(function() {
@@ -809,7 +834,7 @@
                     $('.care').fadeIn()
                 }, 10000)
                 this.$window.on('click', function() {
-                    var self = this
+
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -821,7 +846,7 @@
                     }, 10000)
                 })
                 this.$window.on('mouseup', function() {
-                    var self = this
+
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -833,7 +858,7 @@
                     }, 10000)
                 })
                 this.$window.on('mousemove', function() {
-                    var self = this
+
                     clearTimeout(timeon)
                     $('main').css({
                         display: 'block'
@@ -842,42 +867,211 @@
                         display: 'none'
                     })
                     timeon = setTimeout(function() {
-                        $('main').css({
+                        self.$main.css({
                             display: 'none'
                         })
-                        $('.care').css({
+                        self.$care.css({
                             display: 'block'
                         })
                     }, 10000)
                 })
                 this.$window.on('mousedown', function() {
-                    var self = this
+
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
-                        $('main').css({
+                        self.$main.css({
                             display: 'none'
                         })
-                        $('.care').css({
+                        self.$care.css({
                             display: 'block'
                         })
                     }, 10000)
+
                 })
                 this.$window.on('dbclick', function() {
-                    var self = this
+
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
-                        $('main').css({
+                        self.$main.css({
                             display: 'none'
                         })
-                        $('.care').css({
+                        self.$care.css({
                             display: 'block'
                         })
                     }, 10000)
                 })
 
             },
+            loadmusic: function(data) {
+                var self = this
+                $.getJSON('https://jirenguapi.applinzi.com/fm/getSong.php? ', {
+                        channel: '' + data
+                    })
+                    .done(function(ret) {
+
+                        self.like.song = ret.song[0]
+                        console.log(ret.song[0])
+                        self.playmusic(ret.song[0])
+
+                    })
+
+            },
+            playmusic: function(data) {
+
+                $('.play').removeClass('fa-play').addClass('fa-pause')
+                $('.panal figure').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat'
+                })
+                $('.bg').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat',
+                    backgroundSize: 'cover'
+
+                })
+                $('.care figure').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat'
+                })
+                this.like.channelname = this.channelname
+                $('.myname').text(this.channelname)
+                $('.title').text(data.title)
+                $('.auther').text(data.artist)
+                $('.fa-music').addClass('fa-spin')
+                this.audio.src = data.url
+                this.audio.play()
+                this.getlyrics(data.sid)
+            },
+            getlyrics: function(data) {
+                var self = this
+                $.getJSON('https://jirenguapi.applinzi.com/fm/getLyric.php', {
+                        sid: data
+                    })
+                    .done(function(ret) {
+                        //console.log(ret.lyric)
+                        self.lyrobj = []
+                        self.timeobj = []
+                        self.setlyr(ret.lyric)
+                    })
+            },
+            setlyr: function(data) {
+                //console.log(data)
+                // console.log(data.match(/\n/))
+                // var arrtime = (data + '').match(/\d{2}:\d{2}.\d{2}.*?/g)
+                //console.log(arrtime)
+                // var arrlyr = (data + '').split(/\[\d{2}:\d{2}.\d{2}\].*?/g)
+
+                /* arrlyr.shift()
+                $('.lyrics ul').html('')
+                console.log(arrlyr)
+                arrlyr.forEach(function(lyr) {
+                var html = '<li>' + lyr + '</li>'
+                var $node = $(html)
+                $('.lyrics ul').append($node)
+                })
+                dotime(arrtime)
+
+                var stra = data.split(/\n/)
+                    //console.log(stra)
+                var time = []
+                var rlc = []
+                stra.forEach(function(node) {
+                        if (node.match(/\d{2}:\d{2}\.\d{2}/)) {
+                            time.push(node)
+                        }
+                    })
+                    //console.log(time)
+
+                time.forEach(function(node) {
+                    rlc.push(node.match(/\[\d{2}:\d{2}\.\d{2}\]/))
+                })
+                var song = []
+                time.forEach(function(node) {
+                        song.push(node.split(/\[\d{2}:\d{2}\.\d{2}\]/))
+                    })
+                    //console.log(ge)
+                    //console.log(rlc.length)
+                var newlrc = []
+                var newtime = []
+
+                function paiping(arr) {
+                    var arr2 = []
+                    arr.forEach(function(node) {
+
+                        if (node[0] === '' && node.length >= 2) {
+                            node.splice(0, 1)
+                        }
+                        if (Array.isArray(node)) {
+                            arr2 = arr2.concat(paiping(node))
+                        } else {
+                            arr2.push(node)
+                        }
+                    })
+                    return arr2
+                }
+                paiping(song)
+                console.log(paiping(song))
+
+                var newti = paiping(rlc)
+                var newt = []
+                    //console.log(newti)
+                newti.forEach(function(node) {
+
+                    node = node.replace(/\[/, '')
+                    node = node.replace(/\]/, '')
+
+                    newt.push(node.substr(0, 5))
+                })
+                console.log(newt)
+                var self = this
+                for (var i = 0; i < newt.length; i++) {
+                    var html = '<li' + ' showti=' + newt[i] + '' + '>' + song[i] + '</li>'
+                    var $node = $(html)
+                    this.$main.find('.lyrics ul').append($node)
+                }
+                //self.$main.find('.timer minute').html() 
+                //self.$main.find('.timer second').html()
+                showlyr = setInterval(function() {
+                    //console.log(typeof self.$main.find('.timer span').text())
+                    //console.log(".show0" + self.$main.find('.timer span').text())
+                    var clas = ".show0" + self.$main.find('.timer span').text()
+                    /*self.$main.find(".lyrics ul ").find('li[showti=' + clas + ']').css({
+                        display: 'block',
+                        opacity: '0.6',
+                    }).siblings('li').css({
+                        display: 'none'
+                    })*/
+                var self = this
+                var str = data
+                self.lyrobj = []
+                self.timeobj = []
+                    //console.log(str.split(/\n/))
+                    //"[00:00.01]音乐来自百度FM, by 饥人谷"
+                str.split(/\n/).forEach(function(str) {
+                        //console.log(str.match(/\d{2}:\d{2}\.\d{2}/))["00:00.50"]
+
+                        if (str.match(/\d{2}:\d{2}\.\d{2}/)) {
+                            self.timeobj = self.timeobj.concat(str.match(/\d{2}:\d{2}\.\d{2}/))
+                                //console.log(str.split(/\[\d{2}:\d{2}\.\d{2}\]/)[1])
+                            self.lyrobj.push(str.split(/\[\d{2}:\d{2}\.\d{2}\]/)[1])
+                        }
+                    })
+                    //console.log(lyrobj.length, timeobj.length)
+                showlyr = setInterval(function() {
+                    for (var i = 0; i < self.timeobj.length; i++) {
+                        if (self.timeobj[i].substr(0, 5) === '0' + self.$main.find('.timer span').text()) {
+                            self.$main.find('.lyrics p').text(self.lyrobj[i]).css({
+
+                                display: 'inline-block',
+                                opacity: .8
+                            }).boomText()
+                        }
+                    }
+                }, 800)
+
+
+            }
+
         }
         app.init()
+        console.log('hahaahaha', app.like)
 
         function index() {
             return Math.random() * 100 + "%"
@@ -886,6 +1080,24 @@
         function ind() {
             return Math.floor(Math.random() * 255) + 1
         }
+        looklike = setInterval(function() {
+
+            $('.fa-leaf').each(function() {
+                //console.log(this)
+                $(this).css({
+                    top: index(),
+                    left: index()
+                })
+            })
+            $('.fa-star').each(function() {
+                $(this).css({
+                    top: index(),
+                    left: index(),
+                    color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+                })
+            })
+
+        }, 1000)
     </script>
 </body>
 
