@@ -83,8 +83,8 @@
         }
         
         .panal figure {
-            height: 40vh;
-            width: 45vh;
+            height: 50vh;
+            width: 55vh;
             background: url(beijing.jpeg) center center no-repeat;
             background-size: cover;
         }
@@ -235,14 +235,15 @@
         
         .sort {
             position: relative;
-            margin-bottom: 0vh;
+            bottom: 0vh;
             padding: 2vh 10vh 0 10vh;
             height: 22vh;
             width: 100%;
+            position: absolute;
         }
         
         .sort figure {
-            height: 13vh;
+            height: 14vh;
             background: url(beijing.jpg) center center no-repeat;
             background-size: cover;
         }
@@ -252,12 +253,6 @@
             margin-top: 1vh;
             color: #fff;
             opacity: 0.7;
-        }
-        
-        .sort ul:after {
-            content: '';
-            display: block;
-            clear: both;
         }
         
         .sort ul li {
@@ -374,16 +369,17 @@
         
         .like {
             display: none;
-            position: absolute;
             position: relative;
-            width: 80vh;
-            padding: 2vh 5vh 0 5vh;
+            padding: 2vh 5vh 3vh 5vh;
             border-radius: 8px;
-            top: 15vh;
-            left: 50%;
+            margin-top: 15vh;
+            height: 63vh;
+            width: 100%;
+            overflow: scroll;
         }
         
         .like ul {
+            overflow: scroll;
             display: flex;
         }
         
@@ -405,17 +401,17 @@
         }
         
         .like ul li {
-            display: inline-block;
-            width: 18vh;
-            flex: 1;
+            width: 20vh;
             list-style: none;
+            display: inline-block;
             text-align: center;
             cursor: pointer;
-            z-index: 3;
+            z-index: 5;
+            margin-top: 6vh;
         }
         
         .like ul li figure {
-            height: 18vh;
+            height: 15vh;
             background: url(beijing.jpg) center center no-repeat;
             background-size: cover;
         }
@@ -427,8 +423,27 @@
             opacity: 0.7;
         }
         
+        .like ul li .remove {
+            color: cornsilk;
+            font-size: 4vh;
+            top: 2vh;
+            position: absolute;
+            z-index: 7;
+            opacity: .5;
+            transition: all 1.5s;
+        }
+        
+        .like ul li .remove:hover {
+            background: red;
+            border-radius: 50%;
+            opacity: 8;
+            font-size: 5vh;
+        }
+        
         .like ul li:hover {
-            color: chartreuse;
+            color: rgb(13, 101, 136);
+            width: 20vh;
+            z-index: 10;
             box-shadow: 0px -.25vh .25vh .25vh rgba(255, 255, 255, .7);
         }
         
@@ -438,7 +453,7 @@
             position: absolute;
             z-index: 3;
             top: 5vh;
-            opacity: .4;
+            opacity: .6;
             left: 10vh;
             transition: all 1s;
             cursor: pointer;
@@ -448,6 +463,23 @@
             opacity: 2;
             font-size: 8vh;
         }
+        
+        .ismove {
+            font-size: 6vh;
+            position: absolute;
+            top: 8vh;
+            right: 8vh;
+            color: cornflowerblue;
+            opacity: 0.5;
+            text-shadow:0 0 20px #ff6600;
+            z-index: 2;
+            transition: all 1s;
+            cursor: pointer;
+        }
+        
+        .ismove:hover {
+            opacity: .9;
+        }
     </style>
 
 </head>
@@ -456,6 +488,8 @@
     <div class="bg-bottom"></div>
     <div class="bg"></div>
     <main>
+        <span class="fa-smile-o fa ismove" title="不卡就来点浪漫吧！">kissme
+        </span>
         <span class="fa-list fa">My favorite</span>
         <div class="like">
             <div class="likebg"></div>
@@ -464,16 +498,12 @@
             </ul>
         </div>
         <span class="fa-leaf fa  fa-3x fa-fw"></span>
-        <span class="fa-star star1  fa"></span>
-        <span class="fa-star star2 fa"></span>
-        <span class="fa-star star3 fa"></span>
-        <span class="fa-star star4 fa"></span>
+
         <span class="fa-star star5 fa"></span>
         <span class="fa-star star6 fa"></span>
         <span class="fa-star star7 fa"></span>
         <span class="fa-leaf leaf1 fa fa-3x fa-fw"></span>
-        <span class="fa-leaf fa leaf2 fa-3x fa-fw"></span>
-        <span class="fa-leaf fa leaf3 fa-3x fa-fw"></span>
+
         <span class="fa-leaf fa leaf4 fa-3x fa-fw"></span>
         <span class="fa-leaf fa fa-3x leaf5 fa-fw"></span>
         <span class="fa-leaf fa fa-3x leaf6 fa-fw"></span>
@@ -815,7 +845,12 @@
          }*/
 
 
-
+        setInterval(function() {
+            $('.ismove').fadeIn()
+            setTimeout(function() {
+                $('.ismove').fadeOut()
+            }, 5000)
+        }, 15000)
         var app = {
             init: function() {
                 this.audio = new Audio()
@@ -830,6 +865,7 @@
                 this.$play = $('.play')
                 this.lyrobj
                 this.timeobj
+                    //this.remove
                 this.likebox = []
                 this.like = {}
                 this.$music = $('.fa-music')
@@ -903,8 +939,8 @@
 
 
 
-                this.$main.find('.fa-list').on('click', function() {
-                    event.stopPropagation()
+                this.$main.find('.fa-list').on('click', function(e) {
+                    e.stopPropagation()
                     console.log(window.localStorage)
                     self.likebox = []
                     self.$main.find('.like ul').html('')
@@ -921,35 +957,104 @@
                     self.likebox.forEach(function(music) {
                         console.log(music)
                         var html = ` <li>
+                                <span class="fa remove fa-times"></span>
                                     <figure></figure>
                                     <p></p>
                                     </li>`
                         var $node = $(html)
                         $node.find('figure').css({
-                            background: 'url(' + music.song.picture + ')'
+                            background: 'url(' + music.song.picture + ')' + ' center' + ' center' + ' no-repeat',
+                            backgroundSize: 'cover'
                         })
                         $node.find('p').text(music.song.title + ' - ' + music.song.artist)
                         self.$main.find('.like ul').append($node)
                     })
+
+
+
                     self.$main.find('.like').fadeIn()
+                    self.$main.find('.playpanal').fadeOut()
                     tofadeout = setTimeout(function() {
                         self.$main.find('.like').fadeOut()
+                        self.$main.find('.playpanal').fadeIn()
                     }, 15000)
 
                 })
 
-                self.$main.find('.like').on('click', 'li', function() {
-                    event.stopPropagation()
-                    console.log(this, 'ceshi')
-                    console.log($(this).index())
-                    console.log(self.likebox[$(this).index()])
-                    self.playmusic(self.likebox[$(this).index()].song)
-                    if (self.likebox[$(this).index()].channelname) {
-                        self.$main.find('.myname').text(self.likebox[$(this).index()].channelname)
+                self.$main.find('.like ').on('click', 'li', function(e) {
+                        e.stopPropagation()
+                        console.log(this, 'ceshi')
+                            //console.log($(this).index())
+                        console.log(self.likebox[$(this).index()])
+                            /*  Eventcenter.on('isremoving', function(e, data) {
+                                  console.log(e, data)
+                                  self.remove = data.isremoving
+
+                              })
+                             */
+                        self.playmusic(self.likebox[$(this).index()].song)
+
+
+
+
+
+                        if (self.likebox[$(this).index()].channelname) {
+                            self.$main.find('.myname').text(self.likebox[$(this).index()].channelname)
+                        }
+                    })
+                    // self.$main.find('.like ').on('mouseover', 'li', function() {
+                    //    $(this).before('<span class="fa remove fa-times"></span>')
+                    // })
+                self.$main.find('.like').on('click', '.remove', function(e) {
+                    function getkey(i) {
+                        return 'likesong' + i
                     }
+                    Eventcenter.fire('isremoving', {
+                        isremoving: true
+                    })
+                    e.stopPropagation()
+                    var ind = $(this).index()
+                    window.localStorage[getkey(ind)] = window.localStorage[getkey(window.localStorage.length - 1)]
+                    window.localStorage.removeItem(getkey(window.localStorage.length - 1))
+                        /* if(ind<window.localStorage.length){
+                             for(var i=ind;i<window.localStorage.length;i++){
+                                 
+                             }
+                         }*/
+                    console.log(ind, window.localStorage, 'panduan')
+                    $(this).parent('li').remove()
                 })
 
 
+
+
+                self.$main.find('.ismove').click(function() {
+
+                    if ($(this).hasClass('fa-smile-o')) {
+                        looklike = setInterval(function() {
+
+                            $('.fa-leaf').each(function() {
+                                //console.log(this)
+                                $(this).css({
+                                    top: index(),
+                                    left: index()
+                                })
+                            })
+                            $('.fa-star').each(function() {
+                                $(this).css({
+                                    top: index(),
+                                    left: index(),
+                                    color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+                                })
+                            })
+
+                        }, 2000)
+                        $(this).removeClass('fa-smile-o').addClass('fa-frown-o').attr('title', '卡得不想要浪漫了！kissme')
+                    } else {
+                        clearInterval(looklike)
+                        $(this).removeClass('fa-frown-o').addClass('fa-smile-o').attr('title', '不卡？小主想要浪漫了！kissme')
+                    }
+                })
 
 
 
@@ -1001,6 +1106,7 @@
                 }, 10000)
                 this.$window.on('click', function() {
                     self.$main.find('.like').fadeOut()
+                    self.$main.find('.playpanal').fadeIn()
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -1236,8 +1342,6 @@
             }
 
         }
-        app.init()
-        console.log('hahaahaha', app.like)
 
         function index() {
             return Math.random() * 100 + "%"
@@ -1246,24 +1350,8 @@
         function ind() {
             return Math.floor(Math.random() * 255) + 1
         }
-        looklike = setInterval(function() {
-
-            $('.fa-leaf').each(function() {
-                //console.log(this)
-                $(this).css({
-                    top: index(),
-                    left: index()
-                })
-            })
-            $('.fa-star').each(function() {
-                $(this).css({
-                    top: index(),
-                    left: index(),
-                    color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
-                })
-            })
-
-        }, 1000)
+        app.init()
+            //console.log('hahaahaha', app.like)
     </script>
 </body>
 
