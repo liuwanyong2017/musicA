@@ -371,6 +371,83 @@
             color: yellow;
             text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
         }
+        
+        .like {
+            display: none;
+            position: absolute;
+            position: relative;
+            width: 80vh;
+            padding: 2vh 5vh 0 5vh;
+            border-radius: 8px;
+            top: 15vh;
+            left: 50%;
+        }
+        
+        .like ul {
+            display: flex;
+        }
+        
+        .likebg {
+            position: absolute;
+            background: blue;
+            z-index: 2;
+            opacity: 0.2;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .like ul::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .like ul li {
+            display: inline-block;
+            width: 18vh;
+            flex: 1;
+            list-style: none;
+            text-align: center;
+            cursor: pointer;
+            z-index: 3;
+        }
+        
+        .like ul li figure {
+            height: 18vh;
+            background: url(beijing.jpg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .like ul li p {
+            font-size: 2vh;
+            margin-top: 1vh;
+            color: #fff;
+            opacity: 0.7;
+        }
+        
+        .like ul li:hover {
+            color: chartreuse;
+            box-shadow: 0px -.25vh .25vh .25vh rgba(255, 255, 255, .7);
+        }
+        
+        .fa-list {
+            color: cadetblue;
+            font-size: 6vh;
+            position: absolute;
+            z-index: 3;
+            top: 5vh;
+            opacity: .4;
+            left: 10vh;
+            transition: all 1s;
+            cursor: pointer;
+        }
+        
+        .fa-list:hover {
+            opacity: 2;
+            font-size: 8vh;
+        }
     </style>
 
 </head>
@@ -379,6 +456,13 @@
     <div class="bg-bottom"></div>
     <div class="bg"></div>
     <main>
+        <span class="fa-list fa">My favorite</span>
+        <div class="like">
+            <div class="likebg"></div>
+            <ul>
+
+            </ul>
+        </div>
         <span class="fa-leaf fa  fa-3x fa-fw"></span>
         <span class="fa-star star1  fa"></span>
         <span class="fa-star star2 fa"></span>
@@ -746,9 +830,12 @@
                 this.$play = $('.play')
                 this.lyrobj
                 this.timeobj
+                this.likebox = []
                 this.like = {}
                 this.$music = $('.fa-music')
+                this.loadmusic()
                 this.bind()
+
             },
             bind: function() {
                 var self = this
@@ -772,18 +859,97 @@
 
 
                 this.$main.find('.panalbar .fa-heart').on('click', function() {
+                    console.log(self.like, 'yeyeyeye')
 
-                    console.log('like')
-                    if (self.audio.src) {
-                        var obj
-                        obj.src = self.audio.src
-                        obj.title = self.$main.find('.title').text()
-                        obj.auther = self.$main.find('.auther').text()
-                        obj.channelid = self.channelid
-                        obj.channelname = self.channelname
-                        obj.picture = $('.bg').attr('')
+                    var i = window.localStorage.length
+
+                    function getkey(i) {
+                        return 'likesong' + i
+                    }
+
+                    function isstoraged() {
+                        if (i > 0) {
+                            for (var ind = 0; ind < i; ind++) {
+                                var isorno = localStorage[getkey(ind)].indexOf(self.like.song.url) >= 0
+                                switch (isorno) {
+                                    case true:
+                                        return;
+                                        break;
+                                    case false:
+                                        localStorage[getkey(i)] = JSON.stringify(self.like)
+                                        break;
+                                }
+                            }
+                        } else {
+                            localStorage[getkey(i)] = JSON.stringify(self.like)
+                        }
+                    }
+
+                    isstoraged()
+                        //localStorage[getkey(i)] = JSON.stringify(self.like)
+
+                    /*else {
+                                                localStorage[getkey(i + 1)] = JSON.stringify(self.like)
+                                            }
+                                        */
+
+                    //window.localStorage.setItem('likesong', JSON.stringify(self.like))
+                    self.like = {}
+                        //localStorage.clear()
+                    console.log(window.localStorage.length, window.localStorage, 'shenle')
+
+                })
+
+
+
+
+                this.$main.find('.fa-list').on('click', function() {
+                    event.stopPropagation()
+                    console.log(window.localStorage)
+                    self.likebox = []
+                    self.$main.find('.like ul').html('')
+
+                    function getkey(i) {
+                        return 'likesong' + i
+                    }
+                    var leng = window.localStorage.length
+                    if (leng === 0) return;
+                    for (var i = 0; i < leng; i++) {
+                        self.likebox.push(JSON.parse(localStorage[getkey(i)]))
+                    }
+                    console.log(self.likebox, 'box')
+                    self.likebox.forEach(function(music) {
+                        console.log(music)
+                        var html = ` <li>
+                                    <figure></figure>
+                                    <p></p>
+                                    </li>`
+                        var $node = $(html)
+                        $node.find('figure').css({
+                            background: 'url(' + music.song.picture + ')'
+                        })
+                        $node.find('p').text(music.song.title + ' - ' + music.song.artist)
+                        self.$main.find('.like ul').append($node)
+                    })
+                    self.$main.find('.like').fadeIn()
+                    tofadeout = setTimeout(function() {
+                        self.$main.find('.like').fadeOut()
+                    }, 15000)
+
+                })
+
+                self.$main.find('.like').on('click', 'li', function() {
+                    event.stopPropagation()
+                    console.log(this, 'ceshi')
+                    console.log($(this).index())
+                    console.log(self.likebox[$(this).index()])
+                    self.playmusic(self.likebox[$(this).index()].song)
+                    if (self.likebox[$(this).index()].channelname) {
+                        self.$main.find('.myname').text(self.likebox[$(this).index()].channelname)
                     }
                 })
+
+
 
 
 
@@ -834,7 +1000,7 @@
                     $('.care').fadeIn()
                 }, 10000)
                 this.$window.on('click', function() {
-
+                    self.$main.find('.like').fadeOut()
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
