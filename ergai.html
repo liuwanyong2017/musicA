@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐主页</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.2;
+            color: aliceblue;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            position: relative;
+        }
+        
+        .bg-bottom {
+            height: 100%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            filter: blur(4px);
+            background-size: cover;
+            background: linear-gradient(to right bottom, rgba(38, 157, 200, .6), rgba(150, 200, 250, .3)), url(beijing.jpeg) center center no-repeat;
+        }
+        
+        .bg {
+            height: 100%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            filter: blur(4px);
+            background-size: cover;
+            background: url(beijing.jpeg) center center no-repeat;
+        }
+        
+        .care {
+            display: none;
+        }
+        
+        .playpanal {
+            height: 78vh;
+            position: relative;
+            padding: 3vh 10vh 0 10vh;
+        }
+        
+        .playbg {
+            background: black;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 20vh;
+        }
+        
+        .panal {
+            float: left;
+        }
+        
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .panal figure {
+            height: 50vh;
+            width: 55vh;
+            background: url(beijing.jpeg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .panalbar {
+            margin-top: 8vh;
+            font-size: 4vh;
+            display: flex;
+            text-align: center;
+        }
+        
+        .panalbar span {
+            flex: 1;
+            transition: color .7s;
+            cursor: pointer;
+        }
+        
+        .panalbar span:hover {
+            color: cornflowerblue;
+        }
+        
+        .panalbar span:first-child:hover {
+            color: brown;
+        }
+        
+        .playpanal .message {
+            margin-left: 65vh;
+            text-align: left;
+            position: relative;
+        }
+        
+        .message .myname {
+            font-size: 3vh;
+            padding: 2px 10px;
+            background: rgba(49, 9, 145, 0.8);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .message h2 {
+            font-size: 5vh;
+            margin-top: 4vh;
+            text-shadow: 0 0 10px #fff;
+            color: transparent;
+        }
+        
+        .message .elsemes {
+            font-size: 3vh;
+            margin-top: 3vh;
+        }
+        
+        .elsemes span {
+            margin-right: 8%;
+        }
+        
+        .progress {
+            background: cornflowerblue;
+            height: .8vh;
+            width: 80%;
+            flex: 1;
+            cursor: pointer;
+            border-radius: .8vh;
+        }
+        
+        .current-pro {
+            background: #1d04ad;
+            height: .8vh;
+            width: 0%;
+            opacity: 0.7;
+            border-radius: .8vh;
+            transition: all .8s;
+        }
+        
+        .current {
+            display: flex;
+            margin-top: 6vh;
+            align-items: center;
+        }
+        
+        .timer {
+            margin-left: 2vh;
+            font-size: 0;
+            width: 8vh;
+        }
+        
+        .timer span {
+            font-size: 2vh;
+        }
+        
+        .fa-music {
+            color: red;
+            opacity: 0.4;
+            margin-top: 2vh;
+            font-size: 5vh;
+        }
+        
+        .title {
+            margin-top: 4vh;
+            font-size: 4vh;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+        }
+        
+        .auther {
+            opacity: 0.6;
+            font-size: 3vh;
+            margin-top: 3vh;
+        }
+        
+        .sortbg {
+            opacity: 0.3;
+            position: absolute;
+            top: 80vh;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+        }
+        
+        .sort .fa {
+            position: absolute;
+            cursor: pointer;
+            transition: all 1s;
+            opacity: 0;
+            color: rgba(14, 13, 13, 0.4);
+            font-size: 6vh;
+            top: 8vh;
+        }
+        
+        .sort:hover .fa {
+            opacity: .8;
+        }
+        
+        .sort:hover p {
+            color: #1d04ad;
+        }
+        
+        .sort .fa:hover {
+            color: rgba(53, 10, 170, 0.6);
+        }
+        
+        .sort .fa-chevron-left {
+            left: 4vh;
+        }
+        
+        .sort .fa-chevron-right {
+            right: 4vh;
+        }
+        
+        .sort {
+            position: relative;
+            bottom: 0vh;
+            padding: 2vh 10vh 0 10vh;
+            height: 22vh;
+            width: 100%;
+            position: absolute;
+        }
+        
+        .sort figure {
+            height: 14vh;
+            background: url(beijing.jpg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .sort p {
+            font-size: 2vh;
+            margin-top: 1vh;
+            color: #fff;
+            opacity: 0.7;
+        }
+        
+        .sort ul li {
+            width: 18vh;
+            float: left;
+            list-style: none;
+            text-align: center;
+            margin-right: 15px;
+            margin-bottom: 4vh;
+            cursor: pointer;
+        }
+        
+        .sort .box ul {
+            position: absolute;
+            left: 0;
+        }
+        
+        .sort .box {
+            overflow: hidden;
+            position: relative;
+            height: 20vh;
+            padding-top: 2vh;
+        }
+        
+        .sort ul li:hover {
+            box-shadow: 0px -.25vh .25vh .25vh rgba(255, 255, 255, .7);
+        }
+        
+        .sort ul li.active {
+            box-shadow: .5vh .5vh .5vh .5vh rgba(45, 9, 206, 0.5);
+        }
+        
+        main {
+            display: block;
+            overflow: hidden;
+        }
+        
+        .care figure {
+            position: absolute;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50vh;
+            height: 45vh;
+            background: url(beijing.jpeg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .unactive {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 25vh;
+            text-align: center;
+        }
+        
+        .unbg {
+            opacity: 0.4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+        }
+        
+        .unactive .progress {
+            width: 100%;
+        }
+        
+        .unactive .title {
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+            opacity: .8;
+        }
+        
+        .unactive .timer {
+            margin-left: 80%;
+            font-size: 0;
+            display: flex;
+            width: 9vh;
+            position: absolute;
+        }
+        
+        .unactive .timer span {
+            font-size: 4vh;
+            width: 3vh;
+            color: aquamarine;
+            flex: 1;
+            opacity: .6;
+        }
+        
+        .lyrics {
+            font-size: 4vh;
+            margin-top: 3vh;
+            height: 6vh;
+            color: aqua;
+            opacity: .8;
+        }
+        
+        .fa-leaf {
+            position: absolute;
+            opacity: 0.5;
+            color: rgb(27, 218, 74);
+            font-size: 7vh;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+        }
+        
+        .fa-star {
+            font-size: 4vh;
+            position: absolute;
+            color: yellow;
+            text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+        }
+        
+        .like {
+            display: none;
+            position: relative;
+            padding: 2vh 5vh 3vh 5vh;
+            border-radius: 8px;
+            margin-top: 15vh;
+            height: 63vh;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .like ul {
+            overflow: scroll;
+            display: flex;
+            padding: 2vh 5vh 3vh 5vh;
+            position: relative;
+            position: absolute;
+        }
+        
+        .likebg {
+            position: absolute;
+            background: blue;
+            z-index: 2;
+            opacity: 0.2;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .like ul::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .like ul li {
+            width: 20vh;
+            list-style: none;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            z-index: 5;
+            margin-top: 6vh;
+        }
+        
+        .like ul li figure {
+            height: 15vh;
+            background: url(beijing.jpg) center center no-repeat;
+            background-size: cover;
+        }
+        
+        .like ul li p {
+            font-size: 2vh;
+            margin-top: 1vh;
+            color: #fff;
+            opacity: 0.7;
+        }
+        
+        .like ul li .remove {
+            color: cornsilk;
+            font-size: 4vh;
+            top: 2vh;
+            position: absolute;
+            z-index: 7;
+            opacity: .5;
+            transition: all 1.5s;
+        }
+        
+        .like ul li .remove:hover {
+            background: red;
+            border-radius: 50%;
+            opacity: 8;
+            font-size: 5vh;
+        }
+        
+        .like ul li:hover {
+            color: rgb(13, 101, 136);
+            z-index: 10;
+            box-shadow: 0px -.25vh .25vh .25vh rgba(255, 255, 255, .7);
+        }
+        
+        .fa-list {
+            color: cornflowerblue;
+            font-size: 5vh;
+            position: absolute;
+            z-index: 3;
+            top: 3vh;
+            opacity: .6;
+            left: 10vh;
+            transition: all 1s;
+            cursor: pointer;
+            text-shadow: 0 0 20px #ff6600;
+        }
+        
+        .fa-list:hover {
+            opacity: 1;
+            font-size: 7vh;
+        }
+        
+        .ismove {
+            font-size: 6vh;
+            position: absolute;
+            top: 8vh;
+            right: 8vh;
+            color: cornflowerblue;
+            opacity: 0.5;
+            z-index: 2;
+            transition: all 1s;
+            cursor: pointer;
+            text-shadow: 0 0 20px #ff6600;
+        }
+        
+        .fa-eye {
+            color: grey;
+            font-size: 3vh;
+            transition: all 1.5s;
+            z-index: 10;
+            position: fixed;
+            bottom: 40vh;
+            width: 30vh;
+            display: none;
+            cursor: pointer;
+        }
+        
+        .fa-eye:hover {
+            color: black;
+            opacity: .7;
+            text-shadow: 0 0 20px #ff6600;
+        }
+        
+        .ismove:hover {
+            opacity: .9;
+        }
+        
+        .searchbar {
+            z-index: 6;
+            width: 40%;
+            position: fixed;
+            position: relative;
+            top: 2vh;
+            left: 70vh;
+            display: flex;
+            height: 6vh;
+            align-items: center;
+        }
+        
+        .searchbar input {
+            padding: .8vh 6vh;
+            flex: 1;
+            height: 6vh;
+            font-size: 4vh;
+            color: #000;
+        }
+        
+        .searchbar button {
+            margin-left: 2px;
+            height: 6vh;
+            font-size: 4vh;
+            display: inline-block;
+            border: none;
+            background-color: #1d04ad;
+            color: #fff;
+            opacity: .8;
+            padding: 1vh 2vh;
+        }
+        
+        .fa-search {
+            position: absolute;
+            left: 3vh;
+            top: 50%;
+            font-size: 4vh;
+            color: #000;
+            opacity: .5;
+            transform: translate(-50%, -50%);
+        }
+        
+        .searchbar ul {
+            position: absolute;
+            top: 6vh;
+            width: 50vh;
+            display: none;
+            overflow: scroll;
+        }
+        
+        .searchbar ul li {
+            color: #fff;
+            background: #000;
+            padding-left: 4vh;
+            list-style: none;
+            font-size: 3vh;
+            height: 3.5vh;
+            transition: all 1s;
+        }
+        
+        .searchbar ul li:hover {
+            background: #1d04ad;
+            opacity: .8;
+        }
+        
+        .searchbar ul li a {
+            text-decoration: none;
+            display: block;
+        }
+        
+        .searchbar ul li a img {
+            width: 5vh;
+            display: inline-block;
+            height: 3vh;
+        }
+        
+        .fa-arrow-left {
+            position: fixed;
+            left: 40vh;
+            bottom: 30vh;
+            color: #fff;
+            opacity: 0.3;
+            font-size: 6vh;
+            display: none;
+            transition: all 1.4s;
+            z-index: 10;
+        }
+        
+        .fa-arrow-right {
+            position: fixed;
+            right: 40vh;
+            bottom: 30vh;
+            color: #fff;
+            opacity: 0.3;
+            font-size: 6vh;
+            display: none;
+            transition: all 1.4s;
+            z-index: 10;
+        }
+        
+        .fa-arrow-left:hover {
+            color: rgb(49, 198, 209);
+            opacity: .9;
+        }
+        
+        .fa-arrow-right:hover {
+            color: rgb(49, 198, 209);
+            opacity: .9;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="bg-bottom"></div>
+    <div class="bg"></div>
+    <main>
+        <span class="fa-arrow-left fa"></span>
+        <span class="fa-arrow-right fa"></span>
+        <div class="searchbar">
+            <span class=" fa fa-search"></span>
+            <input type="text" placeholder="search music">
+            <button>search</button>
+            <ul>
+
+            </ul>
+        </div>
+        <span class="fa-smile-o fa ismove" title="不卡就来点浪漫吧！">kissme
+        </span>
+        <span class="fa-list fa">My favorite</span>
+        <div class="like">
+            <div class="likebg"></div>
+            <ul>
+
+            </ul>
+
+        </div>
+        <span class="fa-eye fa ">spead??? </span>
+        <span class="fa-leaf fa  fa-3x fa-fw"></span>
+
+        <span class="fa-star star5 fa"></span>
+        <span class="fa-star star6 fa"></span>
+        <span class="fa-star star7 fa"></span>
+        <span class="fa-leaf leaf1 fa fa-3x fa-fw"></span>
+
+        <span class="fa-leaf fa leaf4 fa-3x fa-fw"></span>
+        <span class="fa-leaf fa fa-3x leaf5 fa-fw"></span>
+        <span class="fa-leaf fa fa-3x leaf6 fa-fw"></span>
+        <div class="playbg"></div>
+        <div class="playpanal clearfix">
+
+            <div class="panal ">
+                <figure></figure>
+                <div class="panalbar">
+                    <span class="fa-heart fa"></span>
+                    <span class="fa-play play fa"></span>
+                    <span class="fa-forward fa"></span>
+                </div>
+            </div>
+            <div class="message">
+                <span class="myname">流着万条永远的河</span>
+                <h2>just for fun!</h2>
+                <div class="elsemes">
+                    <span class="fa-headphones fa">&nbsp;&nbsp;43545</span>
+                    <span class="fa-heart fa">&nbsp;&nbsp;4655</span>
+                    <span class="fa-podcast fa">&nbsp;&nbsp;LavaRadio</span>
+                </div>
+                <div class="current">
+                    <div class="progress">
+                        <div class="current-pro"></div>
+
+                    </div>
+                    <div class="timer">
+                        <span class="minute">0</span>
+                        <span>:</span>
+                        <span class="second">00</span>
+                    </div>
+                </div>
+
+                <span class="fa-music fa  fa-3x fa-fw"></span>
+                <div class="title">My song</div>
+                <div class="auther">auther</div>
+                <div class="lyrics">
+                    <p></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="sortbg"></div>
+
+
+        <div class="sort">
+            <span class="fa fa-chevron-right"></span>
+            <span class="fa fa-chevron-left"></span>
+            <div class="box">
+                <ul>
+
+                </ul>
+            </div>
+
+
+
+        </div>
+    </main>
+    <div class="care">
+        <figure></figure>
+        <div class="unactive">
+            <div class="unbg"></div>
+
+            <div class="progress">
+                <div class="current-pro"></div>
+
+            </div>
+            <div class="timer">
+                <span class="minute">0</span>
+                <span>:</span>
+                <span class="second">00</span>
+            </div>
+            <div class="title">My song</div>
+            <div class="auther">auther</div>
+        </div>
+    </div>
+    <script>
+        // $.fn.boomText = function(type) {
+        $.fn.boomText = function(type) {
+                //console.log('haha')
+                //console.log(this)
+                type = type || 'rollIn'
+                var str = ''
+
+                for (var i = 0; i < $(this).text().length; i++) {
+                    str += '<span' + ' style="display:inline-block"' + ' class=' + "boomText" + '>' + $(this).text()[i] + '</span>'
+                }
+                //console.log(str)
+                this.html(str)
+
+                var index = 0
+                var $node = $(this).find('span')
+                var clock = setInterval(function() {
+                    $node.eq(index).addClass('animated ' + type).css({
+                        //color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+                        color: 'aqua',
+                        //opacity: '1'
+                    })
+                    index++
+                    if (index >= $node.length) {
+                        clearInterval(clock)
+                    }
+                }, 300)
+
+
+            }
+            /* console.log('haha')
+                 //console.log(this)
+             type = type || 'rollIn'
+             var str = ''
+
+             for (var i = 0; i < $(this).text().length; i++) {
+                 str += '<span' + ' class=' + "boomText" + ' style="display:inline-block"' + '>' + $(this).text()[i] + '</span>'
+             }
+             //console.log(str)
+             this.html(str)
+             var index = 0
+             var $node = $(this).find('span')
+             var clock = setInterval(function() {
+                 $node.eq(index).addClass('animated' + type)
+                 index++
+                 if (index >= $node.length) {
+                     clearInterval(clock)
+                 }
+             }, 200)
+
+
+             } 
+
+              $.fn.boomText = function(type) {
+                   type = type || 'rollIn'
+                   console.log(type)
+                   this.html(function() {
+                       var arr = $(this).text()
+                           .split('').map(function(word) {
+                               return '<span class="boomText">' + word + '</span>'
+                           })
+                       return arr.join('')
+                   })
+
+                   var index = 0
+                   var $boomTexts = $(this).find('span')
+                   var clock = setInterval(function() {
+                       $boomTexts.eq(index).addClass('animated ' + type)
+                       index++
+                       if (index >= $boomTexts.length) {
+                           clearInterval(clock)
+                       }
+                   }, 300)
+               }
+               */
+
+        var footer = {
+            init: function() {
+                this.$sort = $('.sort')
+                this.$ul = $('.sort ul')
+                this.$box = $('.sort .box')
+                this.$leftbtn = $('.fa-chevron-left')
+                this.$rightbtn = $('.fa-chevron-right')
+                this.bind()
+                this.render()
+                this.toend = false
+                this.tostart = false
+            },
+            bind: function() {
+
+                var self = this
+                var ismove
+                this.$rightbtn.click(function() {
+                    var liwid = self.$sort.find('li').outerWidth(true)
+                    var boxwid = self.$box.width()
+
+                    if (ismove) return;
+                    if ((parseFloat(self.$box.width()) - parseFloat(self.$ul.css('left'))) >= parseFloat(self.$ul.width())) {
+                        self.toend = true
+                    };
+                    if (!self.toend) {
+                        ismove = true
+                        self.$ul.animate({
+                            left: '-=' + (liwid * Math.floor(boxwid / liwid))
+                        }, 600, function() {
+                            //console.log(self.$ul.css('left'), self.$ul.width(), self.$box.width())
+                            self.tostart = false
+                            ismove = false
+                        })
+                    }
+                })
+
+                this.$leftbtn.click(function() {
+                    var liwid = self.$sort.find('li').outerWidth(true)
+                    var boxwid = self.$box.width()
+
+                    if (ismove) return;
+                    if (parseFloat(self.$ul.css('left')) >= 0) {
+                        self.tostart = true
+                    }
+                    //console.log(self.tostart)
+                    if (!self.tostart) {
+
+                        ismove = true
+                        self.$ul.animate({
+                            left: '+=' + (liwid * Math.floor(boxwid / liwid))
+                        }, 600, function() {
+                            self.toend = false
+                            ismove = false
+                        })
+
+                    }
+
+                })
+                this.$sort.on('click', 'li', function() {
+                    $(this).addClass('active').siblings().removeClass('active')
+                    Eventcenter.fire('sortclick', {
+                        channelid: $(this).attr('data-channel-id'),
+                        channelname: $(this).attr('data-channel-name')
+                    })
+                })
+            },
+            render: function() {
+                var self = this
+                $.ajax({
+                    url: 'https://jirenguapi.applinzi.com/fm/getChannels.php',
+                    dataType: 'jsonp',
+                    mesold: 'GET'
+                }).done(function(ret) {
+                    console.log(ret.channels)
+                    self.setsort(ret.channels)
+                    self.setstyle()
+                }).fail(function() {
+                    console.log('error...')
+                })
+            },
+            setstyle: function() {
+                var count = this.$sort.find('li').length
+                var width = this.$sort.find('li').outerWidth(true)
+                this.$ul.css({
+                    width: count * width + 'px'
+                })
+                console.log(count, width)
+            },
+            setsort: function(data) {
+                data.forEach(function(sort) {
+                    var tal = '<li data-channel-id=' + sort.channel_id + ' data-channel-name=' + sort.name + '>' +
+                        '<figure></figure>' +
+                        '<p>haha</p>' +
+                        '</li>'
+                    var $node = $(tal)
+                    $node.find('figure').css({
+                        background: 'url(' + sort.cover_small + ')'
+                    })
+                    $node.find('p').text(sort.name)
+                    $('.sort ul').append($node)
+                })
+            },
+
+        }
+        footer.init()
+
+
+
+        var Eventcenter = {
+            on: function(type, handler) {
+                $(document).on(type, handler)
+            },
+            fire: function(type, data) {
+                $(document).trigger(type, data)
+            }
+        }
+
+
+        //'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong'
+
+
+
+
+
+
+
+
+        /* function dotime(data) {
+             var arrtim = []
+
+             data.forEach(function(ret) {
+                     ret.split(/:/)
+
+                     arrtim.push(ret.split(/:/))
+                     for (var i = 0; i < arrtim.length; i++) {
+                         arrtim[i][0] = parseInt(arrtim[i][0], 10)
+                         arrtim[i][1] = parseFloat(arrtim[i][1])
+                     }
+                 })
+                 //console.log(arrtim)
+             var arrti = []
+             arrtim.forEach(function(tim) {
+
+                     arrti.push(tim[0] * 60 + tim[1])
+                     arrti.sort(function(a, b) {
+                         return a - b
+                     })
+                     return arrti
+                 })
+                 //console.log((arrti))
+
+             compare(arrti)
+
+
+         }
+
+
+         function compare(data) {
+             console.log(data)
+             var isontime
+             setInterval(function() {
+
+                 for (var i = 0; i < data.length; i++) {
+
+                     if (data[i] < audio.currentTime && data[i + 1] > audio.currentTime) {
+                         // console.log(i * ($('.lyrics ul li').outerHeight(true)))
+                         //$('.lyrics ul').css({
+
+                         //     position: 'absolute',
+                         //     top: '-' + i * ($('.lyrics ul li').outerHeight(true)) + 'vh'
+                         //  })
+                         //console.log(i)
+                         //console.log($('.lyrics ul li:visible').index())
+                         // if (i === $('.lyrics ul li[isshow]').index()) return;
+                         // console.log(i, isontime)
+                         if (i === isontime) return;
+                         isontime = i
+                         $('.lyrics ul li').eq(i).css({
+                             display: 'block',
+                             opacity: '0.6',
+                         }).attr('isshow', true).siblings('li').css({
+                             display: 'none'
+                         })
+
+                     }
+                 }
+             }, 600)
+         }*/
+
+
+        setInterval(function() {
+            $('.ismove').fadeIn()
+            setTimeout(function() {
+                $('.ismove').fadeOut()
+            }, 5000)
+        }, 15000)
+
+        function mes(mes) {
+            console.log(mes.data.song, mes.data.artist)
+            mes.data.artist.forEach(function(art) {
+                var html = '<li><a ' + 'href=http://music.baidu.com/artist/' + art.artistid + '?pst=sug><img  src=' + art.artistpic + '>' + '    ' + ' 歌手  ' + art.artistname + '<\/a><\/li>'
+                $(html).find('li').css({
+                    background: '#' + 'fff',
+                    color: '#' + 000
+                })
+                $('.searchbar ul').append($(html))
+            })
+            mes.data.song.forEach(function(song) {
+                var html = '<li><a ' + 'href=http://music.baidu.com/song/' + song.songid + '?pst=sug>' + '    ' + ' 歌曲  ' + song.songname + '<\/a><\/li>'
+                $('.searchbar ul').append($(html))
+
+            })
+        }
+        var app = {
+            init: function() {
+                this.audio = new Audio()
+                this.audio.autoplay = true
+                this.channelid
+                this.$main = $('main')
+                this.$care = $('.care')
+                this.channelname
+                this.$window = $(window)
+                this.$progress = $('.progress')
+                this.$forward = $('.fa-forward')
+                this.$play = $('.play')
+                this.lyrobj
+                this.timeobj
+                    //this.remove
+                this.likebox = []
+                this.like = {}
+                this.$music = $('.fa-music')
+                this.loadmusic()
+                this.bind()
+
+            },
+            bind: function() {
+                var self = this
+                Eventcenter.on('sortclick', function(e, data) {
+                    console.log(e, data)
+                    self.channelid = data.channelid
+                    self.channelname = data.channelname
+                    self.loadmusic(data.channelid)
+
+                })
+                this.audio.ontimeupdate = function() {
+
+                    $('.current-pro').css({
+                        width: (self.audio.currentTime / self.audio.duration) * 100 + '%',
+                        opacity: '0.6'
+                    })
+
+                }
+
+
+                this.$main.find('input').on('keyup', function() {
+                    if ($(this).val()) {
+
+                        self.$main.find('.searchbar ul').html('').css({
+                            display: 'block'
+                        })
+
+
+                        var html = '<script ' + 'src=http://sug.music.baidu.com/info/suggestion?format=json&word=' + $(this).val() + '&from=0&callback=mes' + '><\/script>'
+                        $('script').before($(html))
+
+
+
+
+                    }
+
+
+                })
+                this.$main.find('.searchbar button').on('click', function(e) {
+                    e.stopPropagation()
+                    if (self.$main.find('.searchbar input').val()) {
+                        window.open('http://music.baidu.com/search?key=' + self.$main.find('.searchbar input').val() + '?pst=sug')
+                    }
+
+                })
+                this.$main.find('.searchbar').on('click', 'a', function(e) {
+                    e.stopPropagation()
+                    this.target = '_blank'
+                })
+
+
+
+
+
+
+
+
+
+
+
+
+                this.$main.find('.panalbar .fa-heart').on('click', function() {
+                    // console.log(self.like, 'yeyeyeye')
+
+                    var i = window.localStorage.length
+
+                    function getkey(i) {
+                        return 'likesong' + i
+                    }
+
+                    function isstoraged() {
+                        if (i > 0) {
+                            for (var ind = 0; ind < i; ind++) {
+                                var isorno = localStorage[getkey(ind)].indexOf(self.like.song.url) >= 0
+                                switch (isorno) {
+                                    case true:
+                                        return;
+                                        break;
+                                    case false:
+                                        localStorage[getkey(i)] = JSON.stringify(self.like)
+                                        break;
+                                }
+                            }
+                        } else {
+                            localStorage[getkey(i)] = JSON.stringify(self.like)
+                        }
+                    }
+
+                    isstoraged()
+                        //localStorage[getkey(i)] = JSON.stringify(self.like)
+
+                    /*else {
+                                                localStorage[getkey(i + 1)] = JSON.stringify(self.like)
+                                            }
+                                        */
+
+                    //window.localStorage.setItem('likesong', JSON.stringify(self.like))
+                    self.like = {}
+                        //localStorage.clear()
+                        // console.log(window.localStorage.length, window.localStorage, 'shenle')
+
+                })
+
+
+
+
+                this.$main.find('.fa-list').on('click', function(e) {
+                    e.stopPropagation()
+                    console.log(window.localStorage)
+                    self.likebox = []
+                    self.$main.find('.like ul ').html('')
+
+                    function getkey(i) {
+                        return 'likesong' + i
+                    }
+                    var leng = window.localStorage.length
+                    if (leng === 0) return;
+                    for (var i = 0; i < leng; i++) {
+                        self.likebox.push(JSON.parse(localStorage[getkey(i)]))
+                    }
+                    //console.log(self.likebox, 'box')
+                    self.likebox.forEach(function(music) {
+                            console.log(music)
+                            var html = ` <li>
+                                <span class="fa remove fa-times"></span>
+                                    <figure></figure>
+                                    <p></p>
+                                    </li>`
+                            var $node = $(html)
+                            $node.find('figure').css({
+                                background: 'url(' + music.song.picture + ')' + ' center' + ' center' + ' no-repeat',
+                                backgroundSize: 'cover'
+                            })
+                            $node.find('p').text(music.song.title + ' - ' + music.song.artist)
+                            self.$main.find('.like ul').append($node)
+                        })
+                        /* self.$main.find('.like .likebg').css({
+                             right: '-=' + self.$main.find('.like ul').outerWidth(true)
+                         })
+                             */
+                    self.$main.find('.fa-arrow-left').fadeIn()
+                    self.$main.find('.fa-arrow-right').fadeIn()
+                    self.$main.find('.fa-eye').fadeIn()
+                    self.$main.find('.like').fadeIn()
+                    self.$main.find('.playpanal').fadeOut()
+                    tofadeout = setTimeout(function() {
+                        self.$main.find('.fa-eye').fadeOut()
+                        self.$main.find('.like').fadeOut()
+                        self.$main.find('.playpanal').fadeIn()
+                        self.$main.find('.fa-arrow-left').fadeOut()
+                        self.$main.find('.fa-arrow-right').fadeOut()
+                    }, 60000)
+
+                })
+
+
+                this.$main.find('.like').click(function() {
+                    e.stopPropagation()
+                })
+                self.$main.find('.like ').on('click', 'li', function(e) {
+                        e.stopPropagation()
+                        console.log(this, 'ceshi')
+                            //console.log($(this).index())
+                        console.log(self.likebox[$(this).index()])
+                            /*  Eventcenter.on('isremoving', function(e, data) {
+                                  console.log(e, data)
+                                  self.remove = data.isremoving
+
+                              })
+                             */
+                        self.playmusic(self.likebox[$(this).index()].song)
+
+
+
+
+
+                        if (self.likebox[$(this).index()].channelname) {
+                            self.$main.find('.myname').text(self.likebox[$(this).index()].channelname)
+                        }
+                    })
+                    // self.$main.find('.like ').on('mouseover', 'li', function() {
+                    //    $(this).before('<span class="fa remove fa-times"></span>')
+                    // })
+                this.$main.find('.like').on('click', '.likebg', function(e) {
+                    e.stopPropagation()
+
+                })
+
+
+
+
+                self.$main.find('.fa-arrow-left').on('click', function(e) {
+                    e.stopPropagation()
+                    var isstart
+                    var ind = Math.floor(self.$main.find('.like').width() / self.$main.find('.like li').outerWidth(true))
+                    if (isstart) return;
+                    isstart = true
+                    console.log(self.$main.find('.like ul').css('left'), 'left')
+                    if (parseFloat(self.$main.find('.like ul').css('left')) < -parseFloat(self.$main.find('.like li').outerWidth(true))) {
+                        self.$main.find('.like ul').css({
+                            left: '+=' + (self.$main.find('.like li').outerWidth(true) * ind)
+                        })
+                    }
+                    isstart = false
+
+                })
+                self.$main.find('.fa-arrow-right').on('click', function(e) {
+                    e.stopPropagation()
+                    var isend
+
+                    console.log(parseFloat(self.$main.find('.like ul').css('left')), self.$main.find('.like ul').width(), self.$main.find('.like').width())
+                    var ind = Math.floor(self.$main.find('.like').width() / self.$main.find('.like li').outerWidth(true))
+                    console.log(ind, parseFloat(self.$main.find('.like').width()) - parseFloat(self.$main.find('.like ul').css('left')) >= parseFloat(self.$main.find('.like ul').width()))
+                        //if (isend) return;
+                    isend = true
+                    if (parseFloat(self.$main.find('.like').width()) - parseFloat(self.$main.find('.like ul').css('left')) < parseFloat(self.$main.find('.like ul').width())) {
+                        self.$main.find('.like ul').css({
+                            left: '-=' + (self.$main.find('.like li').outerWidth(true) * ind)
+                        })
+                    }
+
+                    isend = false
+                })
+
+
+
+
+
+
+                this.$main.find('.fa-eye').on('click', function(e) {
+                    e.stopPropagation()
+                    console.log('diandaole')
+                    if ($(this).hasClass('spead')) {
+                        $(this).removeClass('spead')
+                        self.$main.find('.like ul li').css({
+                            width: '30vh'
+                        })
+
+                        /*self.$main.find('.like .likebg').css({
+                            right: '-=' + self.$main.find('.like ul').outerWidth(true)
+                        })*/
+                    } else {
+                        $(this).addClass('spead')
+                        self.$main.find('.like ul li').css({
+                            width: '7vh'
+                        })
+
+                    }
+                })
+
+
+
+
+                self.$main.find('.like').on('click', '.remove', function(e) {
+                    function getkey(i) {
+                        return 'likesong' + i
+                    }
+                    // Eventcenter.fire('isremoving', {
+                    //     isremoving: true
+                    //  })
+                    e.stopPropagation()
+                    var ind = $(this).index()
+                    window.localStorage[getkey(ind)] = window.localStorage[getkey(window.localStorage.length - 1)]
+                    window.localStorage.removeItem(getkey(window.localStorage.length - 1))
+                        /* if(ind<window.localStorage.length){
+                             for(var i=ind;i<window.localStorage.length;i++){
+                                 
+                             }
+                         }*/
+                    console.log(ind, window.localStorage, 'panduan')
+                    $(this).parent('li').remove()
+                })
+
+
+
+
+                self.$main.find('.ismove').click(function() {
+
+                    if ($(this).hasClass('fa-smile-o')) {
+                        looklike = setInterval(function() {
+
+                            $('.fa-leaf').each(function() {
+                                //console.log(this)
+                                $(this).css({
+                                    top: index(),
+                                    left: index()
+                                })
+                            })
+                            $('.fa-star').each(function() {
+                                $(this).css({
+                                    top: index(),
+                                    left: index(),
+                                    color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
+                                })
+                            })
+
+                        }, 2000)
+                        $(this).removeClass('fa-smile-o').addClass('fa-frown-o').attr('title', '卡得不想要浪漫了！kissme')
+                    } else {
+                        clearInterval(looklike)
+                        $(this).removeClass('fa-frown-o').addClass('fa-smile-o').attr('title', '不卡？小主想要浪漫了！kissme')
+                    }
+                })
+
+
+
+
+                this.$forward.on('click', function() {
+                    self.like = {}
+                    self.loadmusic(self.channelid)
+                    self.like.channelid = self.channelid
+                })
+                this.$play.on('click', function() {
+                    if (self.audio.paused) {
+                        self.audio.play()
+                        $(this).addClass('fa-pause').removeClass('fa-play')
+                        self.$music.addClass('fa-spin')
+
+                    } else {
+                        self.audio.pause()
+                        $(this).addClass('fa-play').removeClass('fa-pause')
+                        self.$music.removeClass('fa-spin')
+                    }
+                })
+                this.audio.onplay = function() {
+                    clock = setInterval(function() {
+                        $('.minute').text(Math.floor(self.audio.currentTime / 60))
+                        var sec = Math.floor(self.audio.currentTime % 60)
+                        $('.second').text(function() {
+                            return ('' + sec).length === 2 ? sec : '0' + sec
+                        })
+                    }, 1000)
+                }
+                this.audio.onpaused = function() {
+                    clearInterval(showlyr)
+                    clearInterval(clock)
+                    $('.play').addClass('fa-play').removeClass('fa-pause')
+                    $('.fa-music').removeClass('fa-spin')
+                }
+                this.audio.onended = function() {
+                    self.loadmusic(self.channelid)
+                    self.like = {}
+                }
+                this.$progress.on('click', function(e) {
+                        console.log(e.offsetX)
+                        self.audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width, 10)) * self.audio.duration
+                    })
+                    //css({display:'none'}).css({display:'block'})
+                timeon = setTimeout(function() {
+                    $('main').hide()
+                    $('.care').fadeIn()
+                }, 10000)
+                this.$window.on('click', function() {
+                    self.$main.find('.fa-arrow-right').fadeOut()
+                    self.$main.find('.fa-arrow-left').fadeOut()
+                    self.$main.find('.fa-eye').fadeOut()
+                    self.$main.find('.like').fadeOut()
+                    self.$main.find('.playpanal').fadeIn()
+                    self.$main.find('.searchbar ul').fadeOut()
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mouseup', function() {
+
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mousemove', function() {
+
+                    clearTimeout(timeon)
+                    $('main').css({
+                        display: 'block'
+                    })
+                    $('.care').css({
+                        display: 'none'
+                    })
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$window.on('mousedown', function() {
+
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+
+                })
+                this.$window.on('dbclick', function() {
+
+                    clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+
+            },
+            loadmusic: function(data) {
+                var self = this
+                $.getJSON('https://jirenguapi.applinzi.com/fm/getSong.php? ', {
+                        channel: '' + data
+                    })
+                    .done(function(ret) {
+
+                        self.like.song = ret.song[0]
+                        console.log(ret.song[0])
+                        self.playmusic(ret.song[0])
+
+                    })
+
+            },
+            playmusic: function(data) {
+
+                $('.play').removeClass('fa-play').addClass('fa-pause')
+                $('.panal figure').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat'
+                })
+                $('.bg').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat',
+                    backgroundSize: 'cover'
+
+                })
+                $('.care figure').css({
+                    background: 'url(' + data.picture + ')' + ' center center no-repeat'
+                })
+                this.like.channelname = this.channelname
+                $('.myname').text(this.channelname)
+                $('.title').text(data.title)
+                $('.auther').text(data.artist)
+                $('.fa-music').addClass('fa-spin')
+                this.audio.src = data.url
+                this.audio.play()
+                this.getlyrics(data.sid)
+            },
+            getlyrics: function(data) {
+                var self = this
+                $.getJSON('https://jirenguapi.applinzi.com/fm/getLyric.php', {
+                        sid: data
+                    })
+                    .done(function(ret) {
+                        //console.log(ret.lyric)
+                        self.lyrobj = []
+                        self.timeobj = []
+                        self.setlyr(ret.lyric)
+                    })
+            },
+            setlyr: function(data) {
+                //console.log(data)
+                // console.log(data.match(/\n/))
+                // var arrtime = (data + '').match(/\d{2}:\d{2}.\d{2}.*?/g)
+                //console.log(arrtime)
+                // var arrlyr = (data + '').split(/\[\d{2}:\d{2}.\d{2}\].*?/g)
+
+                /* arrlyr.shift()
+                $('.lyrics ul').html('')
+                console.log(arrlyr)
+                arrlyr.forEach(function(lyr) {
+                var html = '<li>' + lyr + '</li>'
+                var $node = $(html)
+                $('.lyrics ul').append($node)
+                })
+                dotime(arrtime)
+
+                var stra = data.split(/\n/)
+                    //console.log(stra)
+                var time = []
+                var rlc = []
+                stra.forEach(function(node) {
+                        if (node.match(/\d{2}:\d{2}\.\d{2}/)) {
+                            time.push(node)
+                        }
+                    })
+                    //console.log(time)
+
+                time.forEach(function(node) {
+                    rlc.push(node.match(/\[\d{2}:\d{2}\.\d{2}\]/))
+                })
+                var song = []
+                time.forEach(function(node) {
+                        song.push(node.split(/\[\d{2}:\d{2}\.\d{2}\]/))
+                    })
+                    //console.log(ge)
+                    //console.log(rlc.length)
+                var newlrc = []
+                var newtime = []
+
+                function paiping(arr) {
+                    var arr2 = []
+                    arr.forEach(function(node) {
+
+                        if (node[0] === '' && node.length >= 2) {
+                            node.splice(0, 1)
+                        }
+                        if (Array.isArray(node)) {
+                            arr2 = arr2.concat(paiping(node))
+                        } else {
+                            arr2.push(node)
+                        }
+                    })
+                    return arr2
+                }
+                paiping(song)
+                console.log(paiping(song))
+
+                var newti = paiping(rlc)
+                var newt = []
+                    //console.log(newti)
+                newti.forEach(function(node) {
+
+                    node = node.replace(/\[/, '')
+                    node = node.replace(/\]/, '')
+
+                    newt.push(node.substr(0, 5))
+                })
+                console.log(newt)
+                var self = this
+                for (var i = 0; i < newt.length; i++) {
+                    var html = '<li' + ' showti=' + newt[i] + '' + '>' + song[i] + '</li>'
+                    var $node = $(html)
+                    this.$main.find('.lyrics ul').append($node)
+                }
+                //self.$main.find('.timer minute').html() 
+                //self.$main.find('.timer second').html()
+                showlyr = setInterval(function() {
+                    //console.log(typeof self.$main.find('.timer span').text())
+                    //console.log(".show0" + self.$main.find('.timer span').text())
+                    var clas = ".show0" + self.$main.find('.timer span').text()
+                    /*self.$main.find(".lyrics ul ").find('li[showti=' + clas + ']').css({
+                        display: 'block',
+                        opacity: '0.6',
+                    }).siblings('li').css({
+                        display: 'none'
+                    })*/
+                var self = this
+                var str = data
+                self.lyrobj = []
+                self.timeobj = []
+                    //console.log(str.split(/\n/))
+                    //"[00:00.01]音乐来自百度FM, by 饥人谷"
+                str.split(/\n/).forEach(function(str) {
+                        //console.log(str.match(/\d{2}:\d{2}\.\d{2}/))["00:00.50"]
+
+                        if (str.match(/\d{2}:\d{2}\.\d{2}/)) {
+                            self.timeobj = self.timeobj.concat(str.match(/\d{2}:\d{2}\.\d{2}/))
+                                //console.log(str.split(/\[\d{2}:\d{2}\.\d{2}\]/)[1])
+                            self.lyrobj.push(str.split(/\[\d{2}:\d{2}\.\d{2}\]/)[1])
+                        }
+                    })
+                    //console.log(lyrobj.length, timeobj.length)
+                showlyr = setInterval(function() {
+                    for (var i = 0; i < self.timeobj.length; i++) {
+                        if (self.timeobj[i].substr(0, 5) === '0' + self.$main.find('.timer span').text()) {
+                            self.$main.find('.lyrics p').text(self.lyrobj[i]).css({
+
+                                display: 'inline-block',
+                                opacity: .8
+                            }).boomText()
+                        }
+                    }
+                }, 800)
+
+
+            }
+
+        }
+
+        function index() {
+            return Math.random() * 100 + "%"
+        }
+
+        function ind() {
+            return Math.floor(Math.random() * 255) + 1
+        }
+        app.init()
+            //console.log('hahaahaha', app.like)
+    </script>
+</body>
+
+</html>
