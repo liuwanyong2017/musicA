@@ -1097,7 +1097,9 @@
 
                 this.$main.find('.panalbar .fa-heart').on('click', function() {
                     // console.log(self.like, 'yeyeyeye')
-
+                    $(this).css({
+                        color:'red'
+                    })
                     var i = window.localStorage.length
 
                     function getkey(i) {
@@ -1509,6 +1511,28 @@
                 this.audio.src = data.url
                 this.audio.play()
                 this.getlyrics(data.sid)
+                this.$main.find('.panalbar .fa-heart').css({
+                    color: '#fff'
+                })
+                var i = window.localStorage.length
+
+                function getkey(i) {
+                    return 'likesong' + i
+                }
+
+                function isstoraged() {
+                    if (i > 0) {
+                        for (var ind = 0; ind < i; ind++) {
+                            var isorno = localStorage[getkey(ind)].indexOf(data.url) >= 0
+                            if (isorno) {
+                                $('main').find('.panalbar .fa-heart').css({
+                                    color: 'red'
+                                })
+                            }
+                        }
+                    }
+                }
+                isstoraged()
             },
             getlyrics: function(data) {
                 var self = this
