@@ -1060,17 +1060,17 @@
 
 
                 this.$main.find('input').on('keyup', function() {
-                    setTimeout(self.isuping) 
-                    self.isuping = setTimeout(function(){
-                        if ( self.$main.find('input').val()) {
-                             self.$main.find('.searchbar ul').html('').css({
-                            display: 'block'
-                        })
-                     var html = '<script ' + 'src=http://sug.music.baidu.com/info/suggestion?format=json&word=' +  self.$main.find('input').val() + '&from=0&callback=mes' + '><\/script>'
-                     $('script').before($(html))
+                    clearTimeout(self.isuping)
+                    self.isuping = setTimeout(function() {
+                        if (self.$main.find('input').val()) {
+                            self.$main.find('.searchbar ul').html('').css({
+                                display: 'block'
+                            })
+                            var html = '<script ' + 'src=http://sug.music.baidu.com/info/suggestion?format=json&word=' + self.$main.find('input').val() + '&from=0&callback=mes' + '><\/script>'
+                            $('script').before($(html))
+                        }
 
-                         }
-                    },1000)
+                    }, 1000)
                 })
                 this.$main.find('.searchbar button').on('click', function(e) {
                     e.stopPropagation()
