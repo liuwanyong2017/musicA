@@ -1001,6 +1001,7 @@
         }, 15000)
 
         function mes(mes) {
+            if(mes.errno)   return;
             console.log(mes.data.song, mes.data.artist)
             mes.data.artist.forEach(function(art) {
                 var html = '<li><a ' + 'href=http://music.baidu.com/artist/' + art.artistid + '?pst=sug><img  src=' + art.artistpic + '>' + '    ' + ' 歌手  ' + art.artistname + '<\/a><\/li>'
@@ -1397,6 +1398,19 @@
                     self.$main.find('.playpanal').fadeIn()
                     self.$main.find('.searchbar ul').fadeOut()
                     clearTimeout(timeon)
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
+                this.$main.find('input').on('keyup', function() {
+
+                    clearTimeout(timeon)
+                    console.log('shuruzhong,,,')
                     timeon = setTimeout(function() {
                         self.$main.css({
                             display: 'none'
