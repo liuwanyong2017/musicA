@@ -18,3 +18,5 @@ HTML5的Audio对象，这种API还是很实用的，读读文档，上手很快�
 前期没想过留有余地给后期扩展做好设想，后期添加其他功能，代码很臃肿，也不好维护。对于这个，我想了想，可以用发布订阅模式的。
 # 地址
 [刘万永的音乐主页](https://liuwanyong2017.github.io/musicAPI/music.html)
+# 技术栈
+HTML5，ajax,jQuery,css3,面向对象编程，js封装，javaScript。
