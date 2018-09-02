@@ -728,7 +728,7 @@
         </div>
     </div>
     <script>
-        // $.fn.boomText = function(type) {
+        
         $.fn.boomText = function(type) {
                 //console.log('haha')
                 //console.log(this)
@@ -757,51 +757,7 @@
 
 
             }
-            /* console.log('haha')
-                 //console.log(this)
-             type = type || 'rollIn'
-             var str = ''
-
-             for (var i = 0; i < $(this).text().length; i++) {
-                 str += '<span' + ' class=' + "boomText" + ' style="display:inline-block"' + '>' + $(this).text()[i] + '</span>'
-             }
-             //console.log(str)
-             this.html(str)
-             var index = 0
-             var $node = $(this).find('span')
-             var clock = setInterval(function() {
-                 $node.eq(index).addClass('animated' + type)
-                 index++
-                 if (index >= $node.length) {
-                     clearInterval(clock)
-                 }
-             }, 200)
-
-
-             } 
-
-              $.fn.boomText = function(type) {
-                   type = type || 'rollIn'
-                   console.log(type)
-                   this.html(function() {
-                       var arr = $(this).text()
-                           .split('').map(function(word) {
-                               return '<span class="boomText">' + word + '</span>'
-                           })
-                       return arr.join('')
-                   })
-
-                   var index = 0
-                   var $boomTexts = $(this).find('span')
-                   var clock = setInterval(function() {
-                       $boomTexts.eq(index).addClass('animated ' + type)
-                       index++
-                       if (index >= $boomTexts.length) {
-                           clearInterval(clock)
-                       }
-                   }, 300)
-               }
-               */
+           
 
         var footer = {
             init: function() {
