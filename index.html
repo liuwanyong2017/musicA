@@ -375,15 +375,15 @@
             margin-top: 15vh;
             height: 63vh;
             width: 100%;
-            overflow: scroll;
+            overflow: hidden;
         }
         
         .like ul {
             overflow: scroll;
             display: flex;
-            width: 100%;
             padding: 2vh 5vh 3vh 5vh;
             position: relative;
+            position: absolute;
         }
         
         .likebg {
@@ -487,7 +487,7 @@
             z-index: 10;
             position: fixed;
             bottom: 40vh;
-            width: 50%;
+            width: 30vh;
             display: none;
             cursor: pointer;
         }
@@ -532,6 +532,7 @@
             color: #fff;
             opacity: .8;
             padding: 1vh 2vh;
+            cursor: pointer;
         }
         
         .fa-search {
@@ -577,6 +578,42 @@
             display: inline-block;
             height: 3vh;
         }
+        
+        .fa-arrow-left {
+            position: fixed;
+            left: 40vh;
+            bottom: 30vh;
+            color: #fff;
+            opacity: 0.3;
+            font-size: 6vh;
+            display: none;
+            transition: all 1.4s;
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        .fa-arrow-right {
+            position: fixed;
+            right: 40vh;
+            bottom: 30vh;
+            color: #fff;
+            opacity: 0.3;
+            font-size: 6vh;
+            display: none;
+            transition: all 1.4s;
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        .fa-arrow-left:hover {
+            color: rgb(49, 198, 209);
+            opacity: .9;
+        }
+        
+        .fa-arrow-right:hover {
+            color: rgb(49, 198, 209);
+            opacity: .9;
+        }
     </style>
 
 </head>
@@ -585,6 +622,8 @@
     <div class="bg-bottom"></div>
     <div class="bg"></div>
     <main>
+        <span class="fa-arrow-left fa"></span>
+        <span class="fa-arrow-right fa"></span>
         <div class="searchbar">
             <span class=" fa fa-search"></span>
             <input type="text" placeholder="search music">
@@ -603,7 +642,7 @@
             </ul>
 
         </div>
-        <span class="fa-eye fa spead">spead??? </span>
+        <span class="fa-eye fa ">spead??? </span>
         <span class="fa-leaf fa  fa-3x fa-fw"></span>
 
         <span class="fa-star star5 fa"></span>
@@ -689,19 +728,16 @@
         </div>
     </div>
     <script>
-        // $.fn.boomText = function(type) {
         $.fn.boomText = function(type) {
                 //console.log('haha')
                 //console.log(this)
                 type = type || 'rollIn'
                 var str = ''
-
                 for (var i = 0; i < $(this).text().length; i++) {
                     str += '<span' + ' style="display:inline-block"' + ' class=' + "boomText" + '>' + $(this).text()[i] + '</span>'
                 }
                 //console.log(str)
                 this.html(str)
-
                 var index = 0
                 var $node = $(this).find('span')
                 var clock = setInterval(function() {
@@ -715,55 +751,51 @@
                         clearInterval(clock)
                     }
                 }, 300)
-
-
             }
-            /* console.log('haha')
-                 //console.log(this)
-             type = type || 'rollIn'
-             var str = ''
+        var Eventcenter = {
+            on: function(type, handler) {
+                $(document).on(type, handler)
+            },
+            fire: function(type, data) {
+                $(document).trigger(type, data)
+            }
+        }
 
-             for (var i = 0; i < $(this).text().length; i++) {
-                 str += '<span' + ' class=' + "boomText" + ' style="display:inline-block"' + '>' + $(this).text()[i] + '</span>'
-             }
-             //console.log(str)
-             this.html(str)
-             var index = 0
-             var $node = $(this).find('span')
-             var clock = setInterval(function() {
-                 $node.eq(index).addClass('animated' + type)
-                 index++
-                 if (index >= $node.length) {
-                     clearInterval(clock)
-                 }
-             }, 200)
+        setInterval(function() {
+            $('.ismove').fadeIn()
+            setTimeout(function() {
+                $('.ismove').fadeOut()
+            }, 5000)
+        }, 15000)
 
+        function mes(mes) {
+            if(mes.errno)   return;
+            console.log(mes.data.song, mes.data.artist)
+            mes.data.artist.forEach(function(art) {
+                var html = '<li><a ' + 'href=http://music.baidu.com/artist/' + art.artistid + '?pst=sug><img  src=' + art.artistpic + '>' + '    ' + ' 歌手  ' + art.artistname + '<\/a><\/li>'
+                $(html).find('li').css({
+                    background: '#' + 'fff',
+                    color: '#' + 000
+                })
+                $('.searchbar ul').append($(html))
+            })
+            mes.data.song.forEach(function(song) {
+                var html = '<li><a ' + 'href=http://music.baidu.com/song/' + song.songid + '?pst=sug>' + '    ' + ' 歌曲  ' + song.songname + '<\/a><\/li>'
+                $('.searchbar ul').append($(html))
+            })
+        }
 
-             } 
-
-              $.fn.boomText = function(type) {
-                   type = type || 'rollIn'
-                   console.log(type)
-                   this.html(function() {
-                       var arr = $(this).text()
-                           .split('').map(function(word) {
-                               return '<span class="boomText">' + word + '</span>'
-                           })
-                       return arr.join('')
-                   })
-
-                   var index = 0
-                   var $boomTexts = $(this).find('span')
-                   var clock = setInterval(function() {
-                       $boomTexts.eq(index).addClass('animated ' + type)
-                       index++
-                       if (index >= $boomTexts.length) {
-                           clearInterval(clock)
-                       }
-                   }, 300)
-               }
-               */
-
+        function index() {
+            return Math.random() * 100 + "%"
+        }
+        function ind() {
+            return Math.floor(Math.random() * 255) + 1
+        }
+    </script>
+    <script>
+        
+       
+           
         var footer = {
             init: function() {
                 this.$sort = $('.sort')
@@ -777,13 +809,11 @@
                 this.tostart = false
             },
             bind: function() {
-
                 var self = this
                 var ismove
                 this.$rightbtn.click(function() {
                     var liwid = self.$sort.find('li').outerWidth(true)
                     var boxwid = self.$box.width()
-
                     if (ismove) return;
                     if ((parseFloat(self.$box.width()) - parseFloat(self.$ul.css('left'))) >= parseFloat(self.$ul.width())) {
                         self.toend = true
@@ -799,18 +829,15 @@
                         })
                     }
                 })
-
                 this.$leftbtn.click(function() {
                     var liwid = self.$sort.find('li').outerWidth(true)
                     var boxwid = self.$box.width()
-
                     if (ismove) return;
                     if (parseFloat(self.$ul.css('left')) >= 0) {
                         self.tostart = true
                     }
                     //console.log(self.tostart)
                     if (!self.tostart) {
-
                         ismove = true
                         self.$ul.animate({
                             left: '+=' + (liwid * Math.floor(boxwid / liwid))
@@ -818,9 +845,7 @@
                             self.toend = false
                             ismove = false
                         })
-
                     }
-
                 })
                 this.$sort.on('click', 'li', function() {
                     $(this).addClass('active').siblings().removeClass('active')
@@ -866,117 +891,11 @@
                     $('.sort ul').append($node)
                 })
             },
-
         }
         footer.init()
-
-
-
-        var Eventcenter = {
-            on: function(type, handler) {
-                $(document).on(type, handler)
-            },
-            fire: function(type, data) {
-                $(document).trigger(type, data)
-            }
-        }
-
-
-        //'https://jirenguapi.applinzi.com/fm/getSong.php?channel=' + ind() + '&' + "callback " + '=' + 'getSong'
-
-
-
-
-
-
-
-
-        /* function dotime(data) {
-             var arrtim = []
-
-             data.forEach(function(ret) {
-                     ret.split(/:/)
-
-                     arrtim.push(ret.split(/:/))
-                     for (var i = 0; i < arrtim.length; i++) {
-                         arrtim[i][0] = parseInt(arrtim[i][0], 10)
-                         arrtim[i][1] = parseFloat(arrtim[i][1])
-                     }
-                 })
-                 //console.log(arrtim)
-             var arrti = []
-             arrtim.forEach(function(tim) {
-
-                     arrti.push(tim[0] * 60 + tim[1])
-                     arrti.sort(function(a, b) {
-                         return a - b
-                     })
-                     return arrti
-                 })
-                 //console.log((arrti))
-
-             compare(arrti)
-
-
-         }
-
-
-         function compare(data) {
-             console.log(data)
-             var isontime
-             setInterval(function() {
-
-                 for (var i = 0; i < data.length; i++) {
-
-                     if (data[i] < audio.currentTime && data[i + 1] > audio.currentTime) {
-                         // console.log(i * ($('.lyrics ul li').outerHeight(true)))
-                         //$('.lyrics ul').css({
-
-                         //     position: 'absolute',
-                         //     top: '-' + i * ($('.lyrics ul li').outerHeight(true)) + 'vh'
-                         //  })
-                         //console.log(i)
-                         //console.log($('.lyrics ul li:visible').index())
-                         // if (i === $('.lyrics ul li[isshow]').index()) return;
-                         // console.log(i, isontime)
-                         if (i === isontime) return;
-                         isontime = i
-                         $('.lyrics ul li').eq(i).css({
-                             display: 'block',
-                             opacity: '0.6',
-                         }).attr('isshow', true).siblings('li').css({
-                             display: 'none'
-                         })
-
-                     }
-                 }
-             }, 600)
-         }*/
-
-
-        setInterval(function() {
-            $('.ismove').fadeIn()
-            setTimeout(function() {
-                $('.ismove').fadeOut()
-            }, 5000)
-        }, 15000)
-
-        function mes(mes) {
-            console.log(mes.data.song, mes.data.artist)
-            mes.data.artist.forEach(function(art) {
-                var html = '<li><a ' + 'href=http://music.baidu.com/artist/' + art.artistid + '?pst=sug><img  src=' + art.artistpic + '>' + '    ' + ' 歌手  ' + art.artistname + '<\/a><\/li>'
-                $(html).find('li').css({
-                    background: '#' + 'fff',
-                    color: '#' + 000
-                })
-                $('.searchbar ul').append($(html))
-            })
-            mes.data.song.forEach(function(song) {
-                var html = '<li><a ' + 'href=http://music.baidu.com/song/' + song.songid + '?pst=sug>' + '    ' + ' 歌曲  ' + song.songname + '<\/a><\/li>'
-                $('.searchbar ul').append($(html))
-
-            })
-        }
+        
+       
+        
         var app = {
             init: function() {
                 this.audio = new Audio()
@@ -991,86 +910,58 @@
                 this.$play = $('.play')
                 this.lyrobj
                 this.timeobj
-                    //this.remove
+                this.isuping
                 this.likebox = []
                 this.like = {}
                 this.$music = $('.fa-music')
                 this.loadmusic()
                 this.bind()
-
             },
             bind: function() {
                 var self = this
-                Eventcenter.on('sortclick', function(e, data) {
-                    console.log(e, data)
-                    self.channelid = data.channelid
-                    self.channelname = data.channelname
-                    self.loadmusic(data.channelid)
-
-                })
-                this.audio.ontimeupdate = function() {
-
-                    $('.current-pro').css({
-                        width: (self.audio.currentTime / self.audio.duration) * 100 + '%',
-                        opacity: '0.6'
-                    })
-
-                }
-
-
+                
+                
+                //搜索功能的相关事件
+                
                 this.$main.find('input').on('keyup', function() {
-                    if ($(this).val()) {
-
-                        self.$main.find('.searchbar ul').html('').css({
-                            display: 'block'
-                        })
-
-
-                        var html = '<script ' + 'src=http://sug.music.baidu.com/info/suggestion?format=json&word=' + $(this).val() + '&from=0&callback=mes' + '><\/script>'
-                        $('script').before($(html))
-
-
-
-
-                    }
-
-
+                    clearTimeout(self.isuping)
+                    self.isuping = setTimeout(function() {
+                        if (self.$main.find('input').val()) {
+                            self.$main.find('.searchbar ul').html('').css({
+                                display: 'block'
+                            })
+                            var html = '<script ' + 'src=http://sug.music.baidu.com/info/suggestion?format=json&word=' + self.$main.find('input').val() + '&from=0&callback=mes' + '><\/script>'
+                            $('script').before($(html))
+                        }
+                    }, 1000)
                 })
                 this.$main.find('.searchbar button').on('click', function(e) {
                     e.stopPropagation()
                     if (self.$main.find('.searchbar input').val()) {
                         window.open('http://music.baidu.com/search?key=' + self.$main.find('.searchbar input').val() + '?pst=sug')
                     }
-
                 })
                 this.$main.find('.searchbar').on('click', 'a', function(e) {
                     e.stopPropagation()
                     this.target = '_blank'
                 })
-
-
-
-
-
-
-
-
-
-
-
-
+                
+                //收藏功能的储存数据
+                
                 this.$main.find('.panalbar .fa-heart').on('click', function() {
                     // console.log(self.like, 'yeyeyeye')
-
+                    if($(this).css('color') === 'red') return;
+                    $(this).css({
+                        color:'red'
+                    })
                     var i = window.localStorage.length
-
                     function getkey(i) {
                         return 'likesong' + i
                     }
-
                     function isstoraged() {
                         if (i > 0) {
                             for (var ind = 0; ind < i; ind++) {
+                                if(!self.like.song.url) return;
                                 var isorno = localStorage[getkey(ind)].indexOf(self.like.song.url) >= 0
                                 switch (isorno) {
                                     case true:
@@ -1085,31 +976,20 @@
                             localStorage[getkey(i)] = JSON.stringify(self.like)
                         }
                     }
-
                     isstoraged()
-                        //localStorage[getkey(i)] = JSON.stringify(self.like)
-
-                    /*else {
-                                                localStorage[getkey(i + 1)] = JSON.stringify(self.like)
-                                            }
-                                        */
-
-                    //window.localStorage.setItem('likesong', JSON.stringify(self.like))
+                       
                     self.like = {}
                         //localStorage.clear()
                         // console.log(window.localStorage.length, window.localStorage, 'shenle')
-
                 })
-
-
-
-
+                
+                //收藏界面的DOM渲染展示
+                
                 this.$main.find('.fa-list').on('click', function(e) {
                     e.stopPropagation()
-                    console.log(window.localStorage)
+                    //console.log(window.localStorage,'storage000')
                     self.likebox = []
                     self.$main.find('.like ul ').html('')
-
                     function getkey(i) {
                         return 'likesong' + i
                     }
@@ -1120,7 +1000,7 @@
                     }
                     //console.log(self.likebox, 'box')
                     self.likebox.forEach(function(music) {
-                            console.log(music)
+                            //console.log(888888,music,8888)
                             var html = ` <li>
                                 <span class="fa remove fa-times"></span>
                                     <figure></figure>
@@ -1128,16 +1008,15 @@
                                     </li>`
                             var $node = $(html)
                             $node.find('figure').css({
-                                background: 'url(' + music.song.picture + ')' + ' center' + ' center' + ' no-repeat',
-                                backgroundSize: 'cover'
+                                'background': 'url(' + music.song.picture + ')' + ' center' + ' center' + ' no-repeat',
+                                'backgroundSize' : 'cover'
                             })
                             $node.find('p').text(music.song.title + ' - ' + music.song.artist)
                             self.$main.find('.like ul').append($node)
                         })
-                        /* self.$main.find('.like .likebg').css({
-                             right: '-=' + self.$main.find('.like ul').outerWidth(true)
-                         })
-                             */
+                       
+                    self.$main.find('.fa-arrow-left').fadeIn()
+                    self.$main.find('.fa-arrow-right').fadeIn()
                     self.$main.find('.fa-eye').fadeIn()
                     self.$main.find('.like').fadeIn()
                     self.$main.find('.playpanal').fadeOut()
@@ -1145,96 +1024,101 @@
                         self.$main.find('.fa-eye').fadeOut()
                         self.$main.find('.like').fadeOut()
                         self.$main.find('.playpanal').fadeIn()
+                        self.$main.find('.fa-arrow-left').fadeOut()
+                        self.$main.find('.fa-arrow-right').fadeOut()
                     }, 60000)
-
                 })
-
-
                 this.$main.find('.like').click(function() {
                     e.stopPropagation()
                 })
                 self.$main.find('.like ').on('click', 'li', function(e) {
-                        e.stopPropagation()
-                        console.log(this, 'ceshi')
+                    e.stopPropagation()
+                    console.log(this, 'ceshi')
                             //console.log($(this).index())
-                        console.log(self.likebox[$(this).index()])
-                            /*  Eventcenter.on('isremoving', function(e, data) {
-                                  console.log(e, data)
-                                  self.remove = data.isremoving
-
-                              })
-                             */
-                        self.playmusic(self.likebox[$(this).index()].song)
-
-
-
-
-
-                        if (self.likebox[$(this).index()].channelname) {
+                    console.log(self.likebox[$(this).index()])
+                           
+                    self.playmusic(self.likebox[$(this).index()].song)
+                    if (self.likebox[$(this).index()].channelname) {
                             self.$main.find('.myname').text(self.likebox[$(this).index()].channelname)
                         }
-                    })
-                    // self.$main.find('.like ').on('mouseover', 'li', function() {
-                    //    $(this).before('<span class="fa remove fa-times"></span>')
-                    // })
-                this.$main.find('.like').on('click', '.likebg', function() {
-                    e.stopPropagation()
-
                 })
-
+                
+                  // 收藏界面的左右滑动功能
+                this.$main.find('.like').on('click', '.likebg', function(e) {
+                    e.stopPropagation()
+                })
+                self.$main.find('.fa-arrow-left').on('click', function(e) {
+                    e.stopPropagation()
+                    var isstart
+                    var ind = Math.floor(self.$main.find('.like').width() / self.$main.find('.like li').outerWidth(true))
+                    if (isstart) return;
+                    isstart = true
+                    //console.log(self.$main.find('.like ul').css('left'), 'left')
+                    if (parseFloat(self.$main.find('.like ul').css('left')) < -parseFloat(self.$main.find('.like li').outerWidth(true))) {
+                        self.$main.find('.like ul').css({
+                            left: '+=' + (self.$main.find('.like li').outerWidth(true) * ind)
+                        })
+                    }
+                    isstart = false
+                })
+                self.$main.find('.fa-arrow-right').on('click', function(e) {
+                    e.stopPropagation()
+                    var isend
+                    //console.log(parseFloat(self.$main.find('.like ul').css('left')), self.$main.find('.like ul').width(), self.$main.find('.like').width())
+                    var ind = Math.floor(self.$main.find('.like').width() / self.$main.find('.like li').outerWidth(true))
+                    //console.log(ind, parseFloat(self.$main.find('.like').width()) - parseFloat(self.$main.find('.like ul').css('left')) >= parseFloat(self.$main.find('.like ul').width()))
+                    isend = true
+                    if (parseFloat(self.$main.find('.like').width()) - parseFloat(self.$main.find('.like ul').css('left')) < parseFloat(self.$main.find('.like ul').width())) {
+                        self.$main.find('.like ul').css({
+                            left: '-=' + (self.$main.find('.like li').outerWidth(true) * ind)
+                        })
+                    }
+                    isend = false
+                })
+                
+                //收藏界面的展示效果功能
+                
                 this.$main.find('.fa-eye').on('click', function(e) {
                     e.stopPropagation()
-                    console.log('diandaole')
+                    //console.log('diandaole')
                     if ($(this).hasClass('spead')) {
                         $(this).removeClass('spead')
-                        self.$main.find('.like ul').css({
-                            width: 10000 + '%'
-                        })
-                        self.$main.find('.like .likebg').css({
-                            right: '-=' + self.$main.find('.like ul').outerWidth(true)
+                        self.$main.find('.like ul li').css({
+                            width: '30vh'
                         })
                     } else {
                         $(this).addClass('spead')
-                        self.$main.find('.like ul').css({
-                            width: 100 + '%'
+                        self.$main.find('.like ul li').css({
+                            width: '7vh'
                         })
-                        self.$main.find('.like .likebg').css({
-                            right: 0
+                        self.$main.find('.like ul ').css({
+                            left: '5vh'
                         })
                     }
                 })
-
-
-
-
+                
+                //收藏界面的删除功能
+                
                 self.$main.find('.like').on('click', '.remove', function(e) {
                     function getkey(i) {
                         return 'likesong' + i
                     }
-                    // Eventcenter.fire('isremoving', {
-                    //     isremoving: true
-                    //  })
+                   
                     e.stopPropagation()
                     var ind = $(this).index()
                     window.localStorage[getkey(ind)] = window.localStorage[getkey(window.localStorage.length - 1)]
                     window.localStorage.removeItem(getkey(window.localStorage.length - 1))
-                        /* if(ind<window.localStorage.length){
-                             for(var i=ind;i<window.localStorage.length;i++){
-                                 
-                             }
-                         }*/
-                    console.log(ind, window.localStorage, 'panduan')
+                       
+                    //console.log(ind, window.localStorage, 'panduan')
                     $(this).parent('li').remove()
                 })
-
-
-
-
+                
+                
+                //js动画的开关触发事件
+                
                 self.$main.find('.ismove').click(function() {
-
                     if ($(this).hasClass('fa-smile-o')) {
                         looklike = setInterval(function() {
-
                             $('.fa-leaf').each(function() {
                                 //console.log(this)
                                 $(this).css({
@@ -1249,7 +1133,6 @@
                                     color: 'rgba(' + ind() + ',' + ind() + ',' + ind() + ',' + Math.random() + ')'
                                 })
                             })
-
                         }, 2000)
                         $(this).removeClass('fa-smile-o').addClass('fa-frown-o').attr('title', '卡得不想要浪漫了！kissme')
                     } else {
@@ -1257,10 +1140,22 @@
                         $(this).removeClass('fa-frown-o').addClass('fa-smile-o').attr('title', '不卡？小主想要浪漫了！kissme')
                     }
                 })
-
-
-
-
+                
+                
+                
+                //音乐播放切换播放等播放功能的事件
+                Eventcenter.on('sortclick', function(e, data) {
+                    //console.log(e, data)
+                    self.channelid = data.channelid
+                    self.channelname = data.channelname
+                    self.loadmusic(data.channelid)
+                })
+                this.audio.ontimeupdate = function() {
+                    $('.current-pro').css({
+                        width: (self.audio.currentTime / self.audio.duration) * 100 + '%',
+                        opacity: '0.6'
+                    })
+                }
                 this.$forward.on('click', function() {
                     self.like = {}
                     self.loadmusic(self.channelid)
@@ -1271,7 +1166,6 @@
                         self.audio.play()
                         $(this).addClass('fa-pause').removeClass('fa-play')
                         self.$music.addClass('fa-spin')
-
                     } else {
                         self.audio.pause()
                         $(this).addClass('fa-play').removeClass('fa-pause')
@@ -1294,19 +1188,22 @@
                     $('.fa-music').removeClass('fa-spin')
                 }
                 this.audio.onended = function() {
-                    self.loadmusic(self.channelid)
                     self.like = {}
+                    self.loadmusic(self.channelid)
                 }
                 this.$progress.on('click', function(e) {
-                        console.log(e.offsetX)
+                        //console.log(e.offsetX)
                         self.audio.currentTime = (e.offsetX / parseInt(getComputedStyle(this).width, 10)) * self.audio.duration
                     })
-                    //css({display:'none'}).css({display:'block'})
+                
+                //屏保功能，以及搜索和收藏界面的展示和消失事件：
                 timeon = setTimeout(function() {
                     $('main').hide()
                     $('.care').fadeIn()
                 }, 10000)
                 this.$window.on('click', function() {
+                    self.$main.find('.fa-arrow-right').fadeOut()
+                    self.$main.find('.fa-arrow-left').fadeOut()
                     self.$main.find('.fa-eye').fadeOut()
                     self.$main.find('.like').fadeOut()
                     self.$main.find('.playpanal').fadeIn()
@@ -1321,8 +1218,19 @@
                         })
                     }, 10000)
                 })
+                this.$main.find('input').on('keyup', function() {
+                    clearTimeout(timeon)
+                    //console.log('shuruzhong,,,')
+                    timeon = setTimeout(function() {
+                        self.$main.css({
+                            display: 'none'
+                        })
+                        self.$care.css({
+                            display: 'block'
+                        })
+                    }, 10000)
+                })
                 this.$window.on('mouseup', function() {
-
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -1334,7 +1242,6 @@
                     }, 10000)
                 })
                 this.$window.on('mousemove', function() {
-
                     clearTimeout(timeon)
                     $('main').css({
                         display: 'block'
@@ -1352,7 +1259,6 @@
                     }, 10000)
                 })
                 this.$window.on('mousedown', function() {
-
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -1362,10 +1268,8 @@
                             display: 'block'
                         })
                     }, 10000)
-
                 })
                 this.$window.on('dbclick', function() {
-
                     clearTimeout(timeon)
                     timeon = setTimeout(function() {
                         self.$main.css({
@@ -1376,24 +1280,22 @@
                         })
                     }, 10000)
                 })
-
             },
+            
+            //音乐播放的方法：
+            
             loadmusic: function(data) {
                 var self = this
                 $.getJSON('https://jirenguapi.applinzi.com/fm/getSong.php? ', {
                         channel: '' + data
                     })
                     .done(function(ret) {
-
                         self.like.song = ret.song[0]
-                        console.log(ret.song[0])
+                        //console.log(ret.song[0])
                         self.playmusic(ret.song[0])
-
                     })
-
             },
             playmusic: function(data) {
-
                 $('.play').removeClass('fa-play').addClass('fa-pause')
                 $('.panal figure').css({
                     background: 'url(' + data.picture + ')' + ' center center no-repeat'
@@ -1401,7 +1303,6 @@
                 $('.bg').css({
                     background: 'url(' + data.picture + ')' + ' center center no-repeat',
                     backgroundSize: 'cover'
-
                 })
                 $('.care figure').css({
                     background: 'url(' + data.picture + ')' + ' center center no-repeat'
@@ -1414,6 +1315,26 @@
                 this.audio.src = data.url
                 this.audio.play()
                 this.getlyrics(data.sid)
+                this.$main.find('.panalbar .fa-heart').css({
+                    color: '#fff'
+                })
+                var i = window.localStorage.length
+                function getkey(i) {
+                    return 'likesong' + i
+                }
+                function isstoraged() {
+                    if (i > 0) {
+                        for (var ind = 0; ind < i; ind++) {
+                            var isorno = localStorage[getkey(ind)].indexOf(data.title) >= 0
+                            if (isorno) {
+                                $('main').find('.panalbar .fa-heart').css({
+                                    color: 'red'
+                                })
+                            }
+                        }
+                    }
+                }
+                isstoraged()
             },
             getlyrics: function(data) {
                 var self = this
@@ -1428,92 +1349,6 @@
                     })
             },
             setlyr: function(data) {
-                //console.log(data)
-                // console.log(data.match(/\n/))
-                // var arrtime = (data + '').match(/\d{2}:\d{2}.\d{2}.*?/g)
-                //console.log(arrtime)
-                // var arrlyr = (data + '').split(/\[\d{2}:\d{2}.\d{2}\].*?/g)
-
-                /* arrlyr.shift()
-                $('.lyrics ul').html('')
-                console.log(arrlyr)
-                arrlyr.forEach(function(lyr) {
-                var html = '<li>' + lyr + '</li>'
-                var $node = $(html)
-                $('.lyrics ul').append($node)
-                })
-                dotime(arrtime)
-
-                var stra = data.split(/\n/)
-                    //console.log(stra)
-                var time = []
-                var rlc = []
-                stra.forEach(function(node) {
-                        if (node.match(/\d{2}:\d{2}\.\d{2}/)) {
-                            time.push(node)
-                        }
-                    })
-                    //console.log(time)
-
-                time.forEach(function(node) {
-                    rlc.push(node.match(/\[\d{2}:\d{2}\.\d{2}\]/))
-                })
-                var song = []
-                time.forEach(function(node) {
-                        song.push(node.split(/\[\d{2}:\d{2}\.\d{2}\]/))
-                    })
-                    //console.log(ge)
-                    //console.log(rlc.length)
-                var newlrc = []
-                var newtime = []
-
-                function paiping(arr) {
-                    var arr2 = []
-                    arr.forEach(function(node) {
-
-                        if (node[0] === '' && node.length >= 2) {
-                            node.splice(0, 1)
-                        }
-                        if (Array.isArray(node)) {
-                            arr2 = arr2.concat(paiping(node))
-                        } else {
-                            arr2.push(node)
-                        }
-                    })
-                    return arr2
-                }
-                paiping(song)
-                console.log(paiping(song))
-
-                var newti = paiping(rlc)
-                var newt = []
-                    //console.log(newti)
-                newti.forEach(function(node) {
-
-                    node = node.replace(/\[/, '')
-                    node = node.replace(/\]/, '')
-
-                    newt.push(node.substr(0, 5))
-                })
-                console.log(newt)
-                var self = this
-                for (var i = 0; i < newt.length; i++) {
-                    var html = '<li' + ' showti=' + newt[i] + '' + '>' + song[i] + '</li>'
-                    var $node = $(html)
-                    this.$main.find('.lyrics ul').append($node)
-                }
-                //self.$main.find('.timer minute').html() 
-                //self.$main.find('.timer second').html()
-                showlyr = setInterval(function() {
-                    //console.log(typeof self.$main.find('.timer span').text())
-                    //console.log(".show0" + self.$main.find('.timer span').text())
-                    var clas = ".show0" + self.$main.find('.timer span').text()
-                    /*self.$main.find(".lyrics ul ").find('li[showti=' + clas + ']').css({
-                        display: 'block',
-                        opacity: '0.6',
-                    }).siblings('li').css({
-                        display: 'none'
-                    })*/
                 var self = this
                 var str = data
                 self.lyrobj = []
@@ -1522,7 +1357,6 @@
                     //"[00:00.01]音乐来自百度FM, by 饥人谷"
                 str.split(/\n/).forEach(function(str) {
                         //console.log(str.match(/\d{2}:\d{2}\.\d{2}/))["00:00.50"]
-
                         if (str.match(/\d{2}:\d{2}\.\d{2}/)) {
                             self.timeobj = self.timeobj.concat(str.match(/\d{2}:\d{2}\.\d{2}/))
                                 //console.log(str.split(/\[\d{2}:\d{2}\.\d{2}\]/)[1])
@@ -1534,26 +1368,15 @@
                     for (var i = 0; i < self.timeobj.length; i++) {
                         if (self.timeobj[i].substr(0, 5) === '0' + self.$main.find('.timer span').text()) {
                             self.$main.find('.lyrics p').text(self.lyrobj[i]).css({
-
                                 display: 'inline-block',
                                 opacity: .8
                             }).boomText()
                         }
                     }
                 }, 800)
-
-
             }
-
         }
-
-        function index() {
-            return Math.random() * 100 + "%"
-        }
-
-        function ind() {
-            return Math.floor(Math.random() * 255) + 1
-        }
+        
         app.init()
             //console.log('hahaahaha', app.like)
     </script>
